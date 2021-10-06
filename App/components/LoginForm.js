@@ -1,6 +1,6 @@
 import React from "react";
 // import {  } from "react-native-gesture-handler";
-import {View, StyleSheet, TextInput, Text} from 'react-native'
+import { View, StyleSheet, TextInput, Text } from 'react-native'
 import colors from "../constants/colors";
 
 const styles = StyleSheet.create({
@@ -14,7 +14,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         borderWidth: 1,
         borderColor: colors.color,
-        margin: 5
+        margin: 5,
+        color: colors.color
     },
     text: {
         color: colors.color
@@ -22,11 +23,11 @@ const styles = StyleSheet.create({
 })
 
 export default function LoginForm() {
-    return(
+    return (
         <View >
-            <Text style={styles.text}>Login Form</Text>
-            <TextInput style={styles.input} /> 
-            <TextInput style={styles.input}/>
+            <Text style={styles.text}>Login For</Text>
+            <TextInput style={styles.input} defaultValue={"Username"} />
+            <TextInput style={styles.input} defaultValue={"Password"} />
         </View>
     )
 }

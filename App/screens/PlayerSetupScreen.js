@@ -1,8 +1,9 @@
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import LoginForm from '../components/LoginForm'
 import colors from '../constants/colors'
 import TurnForm from '../components/TurnForm'
+import RegisterForm from '../components/RegisterForm'
 
 const styles = StyleSheet.create({
     container: {
@@ -28,13 +29,14 @@ const styles = StyleSheet.create({
     }
 })
 
-export default function PlayerSetupScreen() {
-    return(
+export default function PlayerSetupScreen({ navigation }) {
+    return (
         <View style={styles.container}>
             <Text style={styles.text}>Player Setup Screen</Text>
             <LoginForm />
+            <RegisterForm />
             <TurnForm />
-            <TouchableOpacity style={styles.button} onPress={() => console.log("clicked")}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.push("GameSetup")}>
                 <Text style={styles.buttonText}>Start Game</Text>
             </TouchableOpacity>
         </View>

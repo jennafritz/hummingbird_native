@@ -1,7 +1,8 @@
 import React from "react";
 // import {  } from "react-native-gesture-handler";
-import {View, StyleSheet, TextInput, Text} from 'react-native'
+import { View, StyleSheet, TextInput, Text } from 'react-native'
 import colors from "../constants/colors";
+// import styles from "../constants/styles";
 
 const styles = StyleSheet.create({
     container: {
@@ -22,10 +23,10 @@ const styles = StyleSheet.create({
 })
 
 export default function TurnForm() {
-    return(
+    return (
         <View >
-            <Text style={styles.text}>Select Number of Turns</Text>
-            <TextInput style={styles.input} /> 
+            <Text style={styles.text}>Select Number Of Turns</Text>
+            <TextInput style={styles.input}/>
         </View>
     )
 }
