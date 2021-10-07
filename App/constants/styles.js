@@ -4,6 +4,17 @@ import colors from "./colors"
 
 
 const styles = StyleSheet.create({
+    logo: {
+        resizeMode: 'contain',
+        height: '20%',
+        marginTop: 75
+    },
+    titleText: {
+        fontSize: 40,
+        color: colors.color,
+        marginTop: 40,
+        marginBottom: 20
+    },
     text: {
         color: colors.color
     },
@@ -15,11 +26,25 @@ const styles = StyleSheet.create({
         margin: 5,
         color: colors.color
     },
-        container: {
+    container: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: colors.backgroundColor
     },
+    buttonText: {
+        fontSize: 25,
+        color: colors.color,
+        padding: 5,
+        textAlign: 'center'
+    },
+    button: {
+        borderColor: colors.color,
+        borderWidth: 2,
+        borderStyle: 'solid',
+        borderRadius: 8,
+        margin: 25
+    }
 })
 
 export default styles
