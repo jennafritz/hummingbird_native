@@ -5,9 +5,12 @@ import styles from "../constants/styles";
 export default function GamePlayPassingScreen({navigation}) {
     return(
         <View style={styles.container}>
-            <Text style={styles.titleText}>Game Passing Screen</Text>
+            <Text style={styles.titleText}>Pass to ______</Text>
             <TouchableOpacity style={styles.button} onPress={() => navigation.push("GamePlayHumming")}>
-                <Text style={styles.buttonText}>Start Game</Text>
+                <Text style={styles.buttonText}>Next</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.push("EndOfGame")}>
+                <Text style={styles.buttonText}>Finish Game</Text>
             </TouchableOpacity>
         </View>
     )

@@ -13,7 +13,8 @@ const styles = StyleSheet.create({
         fontSize: 40,
         color: colors.color,
         marginTop: 40,
-        marginBottom: 20
+        marginBottom: 20,
+        textAlign: 'center'
     },
     text: {
         color: colors.color
