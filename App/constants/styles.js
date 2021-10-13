@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         margin: 25
     }
+
 })
 
 export default styles

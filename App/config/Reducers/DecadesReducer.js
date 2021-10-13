@@ -9,8 +9,12 @@ const decadesSlice = createSlice({
     initialState,
     reducers: {
         selectDecade(state, action){
-            console.log(action.payload)
-            state.selectedDecades.push(action.payload)
+            let decade = action.payload
+            if(state.selectedDecades.includes(decade)){
+                state.selectedDecades = state.selectedDecades.filter(selectedDecade => selectedDecade !== decade)
+            } else {
+                state.selectedDecades.push(action.payload)
+            }
         }
     }
 })
