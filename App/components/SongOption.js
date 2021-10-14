@@ -19,7 +19,8 @@ export default function SongOption({song}) {
     return (
         <View style = {buttonContainer}>
             <TouchableOpacity style = {decadeButton}>
-                <Text style = {styles.buttonText}>{song}</Text>
+                <Text style = {styles.buttonText}>{song.title} - {song.artist}</Text>
+                <Text style = {styles.buttonText}>{song.year}</Text>
             </TouchableOpacity>
         </View>
     )

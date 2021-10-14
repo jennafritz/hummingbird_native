@@ -1,13 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import DecadesReducer from "./Reducers/DecadesReducer";
-import devToolsEnhancer from "remote-redux-devtools";
+import SongsReducer from "./Reducers/SongsReducer";
+// import devToolsEnhancer from "remote-redux-devtools";
 
 const store = configureStore({
     reducer: {
-        decades: DecadesReducer
+        decades: DecadesReducer,
+        songs: SongsReducer
     },
-    devTools: false,
-    enhancers: [devToolsEnhancer({ realtime: true })]
+    // devTools: false,
+    // enhancers: [devToolsEnhancer({ realtime: true })]
 })
 
 export default store

@@ -1,14 +1,24 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styles from '../constants/styles'
 import DecadeButton from '../components/DecadeButton'
+import { getCurrentSongs } from '../config/Reducers/SongsReducer'
 
 const decadeButtonContainer ={
     ...styles.container,
     justifyContent: "space-around",
 }
 
+
+
 export default function DecadeSetupScreen({ navigation }) {
+    const dispatch = useDispatch()
+
+    const selectedDecades = useSelector(state => state.decades.selectedDecades)
+
+    const songGroups = useSelector(state => state.songs.songGroups)
+
     return (
         <View style={decadeButtonContainer}>
             <Text style = {styles.titleText}>Choose Decades</Text>
@@ -20,7 +30,10 @@ export default function DecadeSetupScreen({ navigation }) {
             <DecadeButton decade = {{name: "00's", value: 2000}}/>
             <DecadeButton decade = {{name: "10's", value: 2010}}/>
             <DecadeButton decade = {{name: "20's", value: 2020}}/>
-            <TouchableOpacity style = {styles.button} onPress = {() => navigation.push("GameStyleSetup")}>
+            <TouchableOpacity style = {styles.button} onPress = {() => {
+                navigation.push("GameStyleSetup")
+                dispatch(getCurrentSongs({decades: selectedDecades, numGroups: songGroups})
+                )}}>
                 <Text style = {styles.buttonText}>
                     Start Game
                 </Text>
