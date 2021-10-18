@@ -15,9 +15,12 @@ const decadesSlice = createSlice({
             } else {
                 state.selectedDecades.push(action.payload)
             }
+        },
+        clearDecades(state, action){
+            state.selectedDecades = []
         }
     }
 })
 
-export const {selectDecade} = decadesSlice.actions
+export const {selectDecade, clearDecades} = decadesSlice.actions
 export default decadesSlice.reducer

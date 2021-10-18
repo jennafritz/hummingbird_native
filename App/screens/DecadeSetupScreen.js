@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, Alert } from 'react-native'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styles from '../constants/styles'
@@ -31,9 +31,13 @@ export default function DecadeSetupScreen({ navigation }) {
             <DecadeButton decade = {{name: "10's", value: 2010}}/>
             <DecadeButton decade = {{name: "20's", value: 2020}}/>
             <TouchableOpacity style = {styles.button} onPress = {() => {
+                if (selectedDecades.length > 0) {
                 navigation.push("GameStyleSetup")
-                dispatch(getCurrentSongs({decades: selectedDecades, numGroups: songGroups})
-                )}}>
+                dispatch(getCurrentSongs({decades: selectedDecades, numGroups: songGroups}))
+                } else {
+                    Alert.alert("Select Decades", "Please choose at least one decade to continue.")
+                }
+                }}>
                 <Text style = {styles.buttonText}>
                     Start Game
                 </Text>

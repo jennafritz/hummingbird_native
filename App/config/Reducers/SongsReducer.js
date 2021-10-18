@@ -35,22 +35,17 @@ const songsSlice = createSlice({
     name: "songs",
     initialState,
     reducers: {
-        // selectDecade(state, action){
-        //     let decade = action.payload
-        //     if(state.selectedDecades.includes(decade)){
-        //         state.selectedDecades = state.selectedDecades.filter(selectedDecade => selectedDecade !== decade)
-        //     } else {
-        //         state.selectedDecades.push(action.payload)
-        //     }
-        // }
+        clearSongGroups(state,action){
+            state.songGroups = 1
+        }
     },
     extraReducers: {
         [getCurrentSongs.fulfilled](state, action){
-            state.songGroups = state.songGroups++
+            state.songGroups = state.songGroups + 1
             state.currentSongs = action.payload
         },
     }
 })
 
-// export const {selectDecade} = decadesSlice.actions
+export const {clearSongGroups} = songsSlice.actions
 export default songsSlice.reducer

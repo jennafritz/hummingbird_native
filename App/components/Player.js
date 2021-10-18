@@ -16,6 +16,9 @@ const buttonContainer = {
 
 
 export default function Player({player}) {
+
+    console.log(player)
+
     return (
         // <div className="player-div">
         //         <div className="player"> {this.props.player.username}
@@ -25,7 +28,7 @@ export default function Player({player}) {
         // </div>
         <View style = {buttonContainer}>
             <TouchableOpacity style = {decadeButton}>
-                <Text style = {styles.buttonText}>{player}</Text>
+                <Text style = {styles.buttonText}>{player.username}</Text>
             </TouchableOpacity>
         </View>
     )
