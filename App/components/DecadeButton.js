@@ -33,7 +33,7 @@ const selectedButtonText = {
 export default function DecadeButton({decade}) {
 
     const selectedDecades = useSelector(state => state.decades.selectedDecades)
-    const [selected, setSelected] = useState(false)
+    const [selected, setSelected] = useState(!!selectedDecades.includes(decade))
 
     const dispatch = useDispatch()
 

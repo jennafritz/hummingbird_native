@@ -2,26 +2,23 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 
 initialState = {
-    currentPlayers: []
+    currentGame: {}
 }
 
-export const loginPlayer = createAsyncThunk("users/loginPlayer", (userObj, thunkAPI) => {
-    return fetch("http://localhost:3000/login", {
+export const createGame = createAsyncThunk("games/createGames", (name, thunkAPI) => {
+    return fetch("http://localhost:3000/games", {
         method: "POST",
         headers: {
         //   Authorization: `Bearer ${localStorage.token}`,
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-            username: userObj.username,
-            password: userObj.password
-        })
+        body: JSON.stringify({name})
       })
         .then(res => res.json())
-        .then(playerObj=> 
+        .then(gameObj=> 
           {
-              console.log("line 23 reducr", playerObj)
-              return playerObj
+              console.log(gameObj)
+              return gameObj
             //   if(itinerariesArray.error){
             //     return thunkAPI.rejectWithValue(itinerariesArray.error)
             //   } else {
@@ -31,8 +28,8 @@ export const loginPlayer = createAsyncThunk("users/loginPlayer", (userObj, thunk
 })
 
 
-const playersSlice = createSlice({
-    name: "players",
+const gamesSlice = createSlice({
+    name: "games",
     initialState,
     reducers: {
         clearPlayers(state, action){
@@ -40,11 +37,11 @@ const playersSlice = createSlice({
         }
     },
     extraReducers: {
-        [loginPlayer.fulfilled](state, action) {
-            state.currentPlayers.push(action.payload)
+        [createGame.fulfilled](state, action) {
+            state.currentGame = action.payload
         }
     }
 })
 
-export const {clearPlayers} = playersSlice.actions
-export default playersSlice.reducer
+export const {} = gamesSlice.actions
+export default gamesSlice.reducer

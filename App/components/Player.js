@@ -17,8 +17,6 @@ const buttonContainer = {
 
 export default function Player({player}) {
 
-    console.log(player)
-
     return (
         // <div className="player-div">
         //         <div className="player"> {this.props.player.username}
