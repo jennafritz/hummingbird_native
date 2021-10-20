@@ -5,14 +5,14 @@ initialState = {
     currentGame: {}
 }
 
-export const createGame = createAsyncThunk("games/createGames", (name, thunkAPI) => {
+export const createGame = createAsyncThunk("games/createGames", (gameName, thunkAPI) => {
     return fetch("http://localhost:3000/games", {
         method: "POST",
         headers: {
         //   Authorization: `Bearer ${localStorage.token}`,
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({name})
+        body: JSON.stringify({name: gameName})
       })
         .then(res => res.json())
         .then(gameObj=> 
