@@ -17,7 +17,6 @@ export const createGame = createAsyncThunk("games/createGames", (gameName, thunk
         .then(res => res.json())
         .then(gameObj=> 
           {
-              console.log(gameObj)
               return gameObj
             //   if(itinerariesArray.error){
             //     return thunkAPI.rejectWithValue(itinerariesArray.error)

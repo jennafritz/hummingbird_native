@@ -10,6 +10,7 @@ import GamePlayGuessingScreen from '../screens/GamePlayGuessingScreen'
 import GamePlayPassingScreen from '../screens/GamePlayPassingScreen'
 import EndOfGameScreen from '../screens/EndOfGameScreen'
 import GameStyleSetupScreen from '../screens/GameStyleSetupScreen'
+import LeaderboardScreen from '../screens/LeaderboardScreen'
 
 const MainStack = createStackNavigator()
 
@@ -23,6 +24,7 @@ const MainStackScreen = () => (
         <MainStack.Screen name="GamePlayGuessing" component={GamePlayGuessingScreen} />
         <MainStack.Screen name="GamePlayPassing" component={GamePlayPassingScreen} />
         <MainStack.Screen name="EndOfGame" component={EndOfGameScreen} />
+        <MainStack.Screen name="Leaderboard" component={LeaderboardScreen} />
     </MainStack.Navigator>
 )
 

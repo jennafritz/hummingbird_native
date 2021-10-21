@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import React from "react";
 import styles from "../constants/styles";
 // import Player from "../components/Player";
@@ -21,9 +21,9 @@ export default function GamePlayGuessingScreen({navigation}) {
     return(
         <View style={styles.container}>
             <Text style={styles.titleText}>Select Winner</Text>
-            {currentGuessers.map(guesser => <SelectWinner player = {guesser} setNewHummer={setNewHummer}/>)}
+            <FlatList keyExtractor={currentGuesser => currentGuesser.id.toString()} data={currentGuessers} renderItem={({item}) => <SelectWinner player = {item} setNewHummer={setNewHummer}/>}/>
+            {/* {currentGuessers.map(guesser => <SelectWinner player = {guesser} setNewHummer={setNewHummer}/>)} */}
             <TouchableOpacity style={styles.button} onPress={() => {
-                console.log("newHummer: ", newHummer)
                 dispatch(selectHummer(newHummer.user_id))
                 navigation.push("GamePlayPassing")
             }}>

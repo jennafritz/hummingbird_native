@@ -20,7 +20,6 @@ export const loginPlayer = createAsyncThunk("users/loginPlayer", (userObj, thunk
         .then(res => res.json())
         .then(playerObj=> 
           {
-              console.log("line 23 reducr", playerObj)
               return playerObj
             //   if(itinerariesArray.error){
             //     return thunkAPI.rejectWithValue(itinerariesArray.error)

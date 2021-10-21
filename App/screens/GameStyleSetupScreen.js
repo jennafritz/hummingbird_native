@@ -27,7 +27,6 @@ export default function GameStyleSetupScreen({ navigation }) {
                 dispatch(createGame(gameName))
                 .then((response) => {
                     let gameObj = response.payload
-                    console.log("gameObj: ", gameObj)
                     dispatch(createUserGames({gameId: gameObj.id, playersArray: players}))
                     .then(() => navigation.push("GamePlayPassing"))
                 })

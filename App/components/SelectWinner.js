@@ -13,7 +13,8 @@ const decadeButton = {
 
 const buttonContainer = {
     ...styles.container,
-    width: "80%"
+    // width: "80%"
+    width: 300
 }
 
 

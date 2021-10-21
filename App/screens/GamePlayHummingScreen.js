@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../constants/styles";
@@ -18,7 +18,8 @@ export default function GamePlayHummingScreen({navigation}) {
     return(
         <View style={styles.container}>
             <Text style={styles.titleText}>Choose Your Song</Text>
-            {currentSongs.map(songObj => <SongOption song={songObj} key={songObj.id}/>)}
+            <FlatList scrollEnabled={false} keyExtractor={songObj => songObj.id.toString()} data={currentSongs} renderItem={({item}) => <SongOption song = {item}/>}/>
+            {/* {currentSongs.map(songObj => <SongOption song={songObj} key={songObj.id}/>)} */}
             <TouchableOpacity style = {styles.button} onPress={() => navigation.push("GamePlayGuessing")}>
                 <Text style = {styles.buttonText}>Guessed!</Text>
             </TouchableOpacity>

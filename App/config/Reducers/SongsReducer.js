@@ -21,7 +21,6 @@ export const getCurrentSongs = createAsyncThunk("songs/getCurrentSongs", (infoOb
         .then(res => res.json())
         .then(songsArray => 
           {
-              console.log(songsArray)
               return songsArray
             //   if(itinerariesArray.error){
             //     return thunkAPI.rejectWithValue(itinerariesArray.error)

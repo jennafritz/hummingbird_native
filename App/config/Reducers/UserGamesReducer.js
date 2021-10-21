@@ -3,10 +3,9 @@ import {useSelector} from 'react-redux'
 
 initialState = {
     currentUserGames: [],
-    currentHummer: {}
+    currentHummer: {},
+    gameWinner: []
 }
-
-
 
 export const createUserGames = createAsyncThunk("userGames/createUserGames", (infoObj, thunkAPI) => {
     return fetch("http://localhost:3000/user_games", {
@@ -32,13 +31,37 @@ export const createUserGames = createAsyncThunk("userGames/createUserGames", (in
           })
 })
 
+export const updateUserGames = createAsyncThunk("userGames/updateUserGames", (userGamesArray, thunkAPI) => {
+    let state = thunkAPI.getState()
+    console.log(state.userGames.currentUserGames)
+    return fetch("http://localhost:3000/update_user_games", {
+        method: "PATCH",
+        headers: {
+        //   Authorization: `Bearer ${localStorage.token}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            finalUserGames: state.userGames.currentUserGames
+        })
+      })
+        .then(res => res.json())
+        .then(message => 
+          {
+              console.log("message: ", message)
+            //   if(itinerariesArray.error){
+            //     return thunkAPI.rejectWithValue(itinerariesArray.error)
+            //   } else {
+            //     return itinerariesArray
+            //   }
+          })
+})
+
 
 const userGamesSlice = createSlice({
     name: "userGames",
     initialState,
     reducers: {
         selectHummer(state, action){
-            console.log(action.payload)
             let newHummer = state.currentUserGames.find(userGame => userGame.user_id === action.payload)
             state.currentHummer = newHummer
         },
@@ -51,26 +74,54 @@ const userGamesSlice = createSlice({
                     }
                 }
             })
-            console.log(state.currentUserGames)
-            // let newHummerIndex = state.currentUserGames.findIndex(userGame => userGame.user_id === action.payload)
-            // state.currentUserGames = state.currentUserGames.splice(newHummerIndex, 1, action.payload)
-            // console.log(action.payload)
+        },
+        findWinner(state, action){
+            let maxPoints = 0
+            state.currentUserGames.forEach(userGame => {
+                if (userGame.points > maxPoints) {
+                    maxPoints = userGame.points
+                }
+            }) 
+
+            state.currentUserGames = state.currentUserGames.map(userGame => {
+                if(userGame.points === maxPoints){
+                    let updatedUserGame = {
+                        ...userGame,
+                        winner: true
+                    }
+                    state.gameWinner.push(updatedUserGame)
+                    return updatedUserGame
+                } else {
+                    return userGame
+                }
+            })
+            // let winners = state.currentUserGames.filter(userGame => userGame.points === maxPoints)
+            // for(let i=0; i<winners.length; i++){
+            //     winners[i] = {
+            //         ...winners[i],
+            //         winner:true
+            //     }
+            // }
+            // state.gameWinner = winners
         }
+        
+    
+        
+    
+        // console.log("maxPoints: ",maxPoints)
     },
     extraReducers: {
         [createUserGames.fulfilled](state, action) {
-            let userGamesWithPoints = action.payload.map(userGame => {
-                return userGame = {
-                    ...userGame,
-                    points: 0
-                }
-            })
-            console.log("userGamesWithPoints: ", userGamesWithPoints)
-            state.currentUserGames = userGamesWithPoints
-            state.currentHummer = userGamesWithPoints[0]
+            state.currentUserGames = action.payload
+            state.currentHummer = action.payload[0]
+        },
+        [updateUserGames.fulfilled](state, action) {
+            console.log("fulfilled")
+            // state.currentUserGames = action.payload
+            // state.currentHummer = action.payload[0]
         }
     }
 })
 
-export const {selectHummer, addPoints} = userGamesSlice.actions
+export const {selectHummer, addPoints, findWinner} = userGamesSlice.actions
 export default userGamesSlice.reducer

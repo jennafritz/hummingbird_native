@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, FlatList } from 'react-native'
 import React from 'react'
 import LoginForm from '../components/LoginForm'
 import colors from '../constants/colors'
@@ -8,6 +8,7 @@ import styles from '../constants/styles'
 import Player from '../components/Player'
 import { useSelector } from 'react-redux'
 
+
 export default function PlayerSetupScreen({ navigation }) {
 
 const currentPlayers = useSelector(state => state.players.currentPlayers)
@@ -15,7 +16,7 @@ const currentPlayers = useSelector(state => state.players.currentPlayers)
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Player Setup Screen</Text>
-            {currentPlayers.map(playerObj => <Player player = {playerObj}/>)}
+            <FlatList keyExtractor={playerObj => playerObj.id.toString()} data={currentPlayers} renderItem={({item}) => <Player player = {item}/>}/>
             <LoginForm />
             {/* <RegisterForm /> */}
             <TurnForm />
