@@ -2,7 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 
 initialState = {
-    currentPlayers: []
+    currentPlayers: [],
+    topPlayers: []
 }
 
 export const loginPlayer = createAsyncThunk("users/loginPlayer", (userObj, thunkAPI) => {
@@ -47,12 +48,53 @@ export const registerPlayer = createAsyncThunk("users/registerPlayer", (userObj,
           {
               console.log(playerObj)
               return playerObj
+          }
+        )
+})
+
+export const getLeaderboard = createAsyncThunk("users/getLeaderboard", (userObj, thunkAPI) => {
+    return fetch("http://localhost:3000/leaderboard", {
+        method: "GET",
+        headers: {
+        //   Authorization: `Bearer ${localStorage.token}`,
+          "Content-Type": "application/json"
+        }
+      })
+        .then(res => res.json())
+        .then(leadersArray=> 
+          {
+              console.log("leadersArray: ", leadersArray)
+              return leadersArray
             //   if(itinerariesArray.error){
             //     return thunkAPI.rejectWithValue(itinerariesArray.error)
             //   } else {
             //     return itinerariesArray
             //   }
           })
+})
+
+export const addPointsToUsers = createAsyncThunk("users/addPointsToUsers", (userGamesArray, thunkAPI) => {
+  return fetch("http://localhost:3000/update_users", {
+      method: "PATCH",
+      headers: {
+      //   Authorization: `Bearer ${localStorage.token}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        playersArray: userGamesArray
+      })
+    })
+      .then(res => res.json())
+      .then(updatedUsersArray=> 
+        {
+            console.log("updatedUsersArray: ", updatedUsersArray)
+            return updatedUsersArray
+          //   if(itinerariesArray.error){
+          //     return thunkAPI.rejectWithValue(itinerariesArray.error)
+          //   } else {
+          //     return itinerariesArray
+          //   }
+        })
 })
 
 
@@ -66,13 +108,21 @@ const playersSlice = createSlice({
     },
     extraReducers: {
         [loginPlayer.fulfilled](state, action) {
-            state.currentPlayers.push(action.payload)
+          console.log("login: ", action.payload)  
+          state.currentPlayers.push(action.payload)
         },
         [registerPlayer.fulfilled](state, action) {
             state.currentPlayers.push(action.payload)
+        },
+        [getLeaderboard.fulfilled](state, action) {
+            state.topPlayers = action.payload
+        },
+        [addPointsToUsers.fulfilled](state, action) {
+          console.log("updated users: ", action.payload)
+            // state.topPlayers = action.payload
         }
     }
-})
+  })
 
 export const {clearPlayers} = playersSlice.actions
 export default playersSlice.reducer

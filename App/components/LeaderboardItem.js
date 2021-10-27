@@ -18,7 +18,7 @@ const buttonContainer = {
 export default function LeaderboardItem({playerInfo}) {
     return (
         <View style = {buttonContainer}>
-            <Text style = {styles.buttonText}>{`${playerInfo.name}.....${playerInfo.points}`}</Text>
+            <Text style = {styles.buttonText}>{`${playerInfo.username}.....${playerInfo.points}`}</Text>
         </View>
     )
 }

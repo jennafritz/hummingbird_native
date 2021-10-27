@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import {useSelector} from 'react-redux'
 
 initialState = {
     currentUserGames: [],
@@ -31,9 +30,8 @@ export const createUserGames = createAsyncThunk("userGames/createUserGames", (in
           })
 })
 
-export const updateUserGames = createAsyncThunk("userGames/updateUserGames", (userGamesArray, thunkAPI) => {
-    let state = thunkAPI.getState()
-    console.log(state.userGames.currentUserGames)
+export const updateUserGames = createAsyncThunk("userGames/updateUserGames", (unused, thunkAPI) => {
+    let currentState = thunkAPI.getState()
     return fetch("http://localhost:3000/update_user_games", {
         method: "PATCH",
         headers: {
@@ -41,7 +39,7 @@ export const updateUserGames = createAsyncThunk("userGames/updateUserGames", (us
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            finalUserGames: state.userGames.currentUserGames
+            finalUserGames: currentState.userGames.currentUserGames
         })
       })
         .then(res => res.json())
@@ -76,6 +74,7 @@ const userGamesSlice = createSlice({
             })
         },
         findWinner(state, action){
+            // console.log("state in findWinner: ", state)
             let maxPoints = 0
             state.currentUserGames.forEach(userGame => {
                 if (userGame.points > maxPoints) {
@@ -103,6 +102,11 @@ const userGamesSlice = createSlice({
             //     }
             // }
             // state.gameWinner = winners
+        },
+        clearUserGameState(state, action){
+            state.currentUserGames = []
+            state.currentHummer = {}
+            state.gameWinner = []
         }
         
     
@@ -123,5 +127,5 @@ const userGamesSlice = createSlice({
     }
 })
 
-export const {selectHummer, addPoints, findWinner} = userGamesSlice.actions
+export const {selectHummer, addPoints, findWinner, clearUserGameState} = userGamesSlice.actions
 export default userGamesSlice.reducer
