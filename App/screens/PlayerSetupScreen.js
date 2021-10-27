@@ -18,7 +18,7 @@ const currentPlayers = useSelector(state => state.players.currentPlayers)
             <Text style={styles.text}>Player Setup Screen</Text>
             <FlatList keyExtractor={playerObj => playerObj.id.toString()} data={currentPlayers} renderItem={({item}) => <Player player = {item}/>}/>
             <LoginForm />
-            {/* <RegisterForm /> */}
+            <RegisterForm />
             <TurnForm />
             <TouchableOpacity style={styles.button} onPress={() => navigation.push("DecadeSetup")}>
                 <Text style={styles.buttonText}>Choose Decades</Text>

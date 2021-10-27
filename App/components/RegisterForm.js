@@ -1,15 +1,35 @@
-import React from "react";
+import React, {useState} from "react";
 // import {  } from "react-native-gesture-handler";
-import { View, TextInput, Text } from 'react-native'
+import { View, TextInput, Text, TouchableOpacity } from 'react-native'
 import colors from "../constants/colors";
 import styles from "../constants/styles";
+import { useSelector, useDispatch } from "react-redux";
+import { registerPlayer } from "../config/Reducers/PlayersReducer";
 
 export default function RegisterForm() {
+    const dispatch = useDispatch()
+
+    const [formData,setFormData] = useState({
+        username:"",
+        password:""
+    })
+
+
+    function handleChange(event, key) {
+        setFormData({
+            ...formData,
+            [key]: event.nativeEvent.text
+        })
+    }
+
     return (
         <View >
-            <Text style={styles.text}>Register New Player</Text>
-            <TextInput style={styles.input} defaultValue={"Username"} />
-            <TextInput style={styles.input} defaultValue={"Password"} />
+            <Text style={styles.text}>Register</Text>
+            <TextInput style={styles.input} value={formData.username}  onChange={(event) => handleChange(event, "username")} placeholder={"Username"} />
+            <TextInput style={styles.input} value={formData.password}  onChange={(event) => handleChange(event, "password")} placeholder={"Password"} secureTextEntry={true}/>
+            <TouchableOpacity style={styles.button} onPress={()=>dispatch(registerPlayer(formData))}>
+                <Text style={styles.buttonText}>Register</Text>
+            </TouchableOpacity>
         </View>
     )
 }

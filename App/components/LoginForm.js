@@ -11,12 +11,10 @@ export default function LoginForm() {
 
     const dispatch = useDispatch()
 
-    const [formData,setFormData] = useState(
-        {
+    const [formData,setFormData] = useState({
         username:"",
         password:""
-        }
-        )
+    })
 
 
     function handleChange(event, key) {
@@ -29,8 +27,8 @@ export default function LoginForm() {
     return (
         <View >
             <Text style={styles.text}>Login Form</Text>
-            <TextInput style={styles.input} value={formData.username}  onChange={(event) => handleChange(event, "username")} defaultValue={"Username"} />
-            <TextInput style={styles.input} value={formData.password}  onChange={(event) => handleChange(event, "password")} defaultValue={"Password"} />
+            <TextInput style={styles.input} value={formData.username}  onChange={(event) => handleChange(event, "username")} placeholder={"Username"} />
+            <TextInput style={styles.input} value={formData.password}  onChange={(event) => handleChange(event, "password")} placeholder={"Password"} secureTextEntry={true} />
             <TouchableOpacity style={styles.button} onPress={()=>dispatch(loginPlayer(formData))}>
                 <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
