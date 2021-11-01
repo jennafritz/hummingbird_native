@@ -16,6 +16,13 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         textAlign: 'center'
     },
+    subHeaderText: {
+        fontSize: 35,
+        color: colors.color,
+        marginTop: 40,
+        marginBottom: 20,
+        textAlign: 'center'
+    },
     text: {
         color: colors.color
     },
@@ -45,6 +52,20 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         borderRadius: 8,
         margin: 25
+    },
+    selectedButton: {
+        borderColor: colors.color,
+        borderWidth: 2,
+        borderStyle: 'solid',
+        borderRadius: 8,
+        margin: 25,
+        backgroundColor: colors.color,
+    }, 
+    selectedButtonText: {
+        fontSize: 25,
+        color: colors.backgroundColor,
+        padding: 5,
+        textAlign: 'center'
     }
 
 })

@@ -3,14 +3,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 initialState = {
-    currentGame: {}
+    currentGame: {},
+    passStyle: undefined, 
+    turnStyle: undefined
 }
 
 const getToken = async () => {
     try {
       const value = await AsyncStorage.getItem('token')
       if(value !== null) {
-        console.log("value: ", value)
         return value
       }
     } catch(e) {
@@ -20,7 +21,6 @@ const getToken = async () => {
 
 export const createGame = createAsyncThunk("games/createGames", async (gameName, thunkAPI) => {
     let token = await getToken()
-    console.log("token in gamesReducer: ", token)
     return fetch("http://localhost:3000/games", {
         method: "POST",
         headers: {
@@ -50,6 +50,15 @@ const gamesSlice = createSlice({
     reducers: {
         clearPlayers(state, action){
             state.players = []
+        },
+        savePassStyle(state, action){
+            state.passStyle = action.payload
+            console.log("passStyle in state: ", state.passStyle)
+        },
+        saveTurnStyle(state, action){
+            state.turnStyle = action.payload
+            console.log("turnStyle in state: ", state.turnStyle)
+
         }
     },
     extraReducers: {
@@ -59,5 +68,5 @@ const gamesSlice = createSlice({
     }
 })
 
-export const {} = gamesSlice.actions
+export const {savePassStyle, saveTurnStyle} = gamesSlice.actions
 export default gamesSlice.reducer
