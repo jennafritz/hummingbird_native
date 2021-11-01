@@ -1,16 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 initialState = {
     currentSongs: [],
     songGroups: 1
 }
 
-export const getCurrentSongs = createAsyncThunk("songs/getCurrentSongs", (infoObj, thunkAPI) => {
-    // console.log("infoObj ",infoObj)
+export const getCurrentSongs = createAsyncThunk("songs/getCurrentSongs", async (infoObj, thunkAPI) => {
+    let token = await getToken()
     return fetch("http://localhost:3000/get_songs", {
         method: "POST",
         headers: {
-        //   Authorization: `Bearer ${localStorage.token}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
@@ -29,6 +30,17 @@ export const getCurrentSongs = createAsyncThunk("songs/getCurrentSongs", (infoOb
             //   }
           })
 })
+
+const getToken = async () => {
+    try {
+      const value = await AsyncStorage.getItem('token')
+      if(value !== null) {
+        return value
+      }
+    } catch(e) {
+        // tbd
+    }
+  }
 
 const songsSlice = createSlice({
     name: "songs",

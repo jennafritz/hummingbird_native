@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 initialState = {
     currentUserGames: [],
@@ -6,11 +7,12 @@ initialState = {
     gameWinner: []
 }
 
-export const createUserGames = createAsyncThunk("userGames/createUserGames", (infoObj, thunkAPI) => {
+export const createUserGames = createAsyncThunk("userGames/createUserGames", async (infoObj, thunkAPI) => {
+    let token = await getToken()
     return fetch("http://localhost:3000/user_games", {
         method: "POST",
         headers: {
-        //   Authorization: `Bearer ${localStorage.token}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
@@ -30,12 +32,13 @@ export const createUserGames = createAsyncThunk("userGames/createUserGames", (in
           })
 })
 
-export const updateUserGames = createAsyncThunk("userGames/updateUserGames", (unused, thunkAPI) => {
+export const updateUserGames = createAsyncThunk("userGames/updateUserGames", async (unused, thunkAPI) => {
+    let token = await getToken()
     let currentState = thunkAPI.getState()
     return fetch("http://localhost:3000/update_user_games", {
         method: "PATCH",
         headers: {
-        //   Authorization: `Bearer ${localStorage.token}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
@@ -53,6 +56,17 @@ export const updateUserGames = createAsyncThunk("userGames/updateUserGames", (un
             //   }
           })
 })
+
+const getToken = async () => {
+    try {
+      const value = await AsyncStorage.getItem('token')
+      if(value !== null) {
+        return value
+      }
+    } catch(e) {
+        // tbd
+    }
+  }
 
 
 const userGamesSlice = createSlice({

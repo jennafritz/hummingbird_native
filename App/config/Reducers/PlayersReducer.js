@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 initialState = {
     currentPlayers: [],
@@ -52,11 +52,12 @@ export const registerPlayer = createAsyncThunk("users/registerPlayer", (userObj,
         )
 })
 
-export const getLeaderboard = createAsyncThunk("users/getLeaderboard", (userObj, thunkAPI) => {
-    return fetch("http://localhost:3000/leaderboard", {
+export const getLeaderboard = createAsyncThunk("users/getLeaderboard", async (userObj, thunkAPI) => {
+  let token = await getToken()  
+  return fetch("http://localhost:3000/leaderboard", {
         method: "GET",
         headers: {
-        //   Authorization: `Bearer ${localStorage.token}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json"
         }
       })
@@ -73,11 +74,12 @@ export const getLeaderboard = createAsyncThunk("users/getLeaderboard", (userObj,
           })
 })
 
-export const addPointsToUsers = createAsyncThunk("users/addPointsToUsers", (userGamesArray, thunkAPI) => {
+export const addPointsToUsers = createAsyncThunk("users/addPointsToUsers", async (userGamesArray, thunkAPI) => {
+  let token = await getToken()
   return fetch("http://localhost:3000/update_users", {
       method: "PATCH",
       headers: {
-      //   Authorization: `Bearer ${localStorage.token}`,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
@@ -97,6 +99,24 @@ export const addPointsToUsers = createAsyncThunk("users/addPointsToUsers", (user
         })
 })
 
+const storeData = async (value) => {
+  try {
+    await AsyncStorage.setItem('token', value)
+  } catch (e) {
+    // saving error
+  }
+}
+
+const getToken = async () => {
+  try {
+    const value = await AsyncStorage.getItem('token')
+    if(value !== null) {
+      return value
+    }
+  } catch(e) {
+      // tbd
+  }
+}
 
 const playersSlice = createSlice({
     name: "players",
@@ -108,11 +128,17 @@ const playersSlice = createSlice({
     },
     extraReducers: {
         [loginPlayer.fulfilled](state, action) {
-          console.log("login: ", action.payload)  
-          state.currentPlayers.push(action.payload)
+          state.currentPlayers.push(action.payload.user)
+          if(state.currentPlayers.length === 1) {
+            storeData(action.payload.token)
+          }
         },
         [registerPlayer.fulfilled](state, action) {
-            state.currentPlayers.push(action.payload)
+          console.log("action.payload: ", action.payload)
+          state.currentPlayers.push(action.payload.user)
+          if(state.currentPlayers.length === 1) {
+            storeData(action.payload.token)
+          }
         },
         [getLeaderboard.fulfilled](state, action) {
             state.topPlayers = action.payload
