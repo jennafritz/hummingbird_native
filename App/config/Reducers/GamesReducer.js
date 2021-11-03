@@ -5,7 +5,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 initialState = {
     currentGame: {},
     passStyle: undefined, 
-    turnStyle: undefined
+    turnStyle: undefined,
+    remainingTurns: undefined
 }
 
 const getToken = async () => {
@@ -58,7 +59,13 @@ const gamesSlice = createSlice({
         saveTurnStyle(state, action){
             state.turnStyle = action.payload
             console.log("turnStyle in state: ", state.turnStyle)
-
+        },
+        saveTurnCount(state, action){
+            state.remainingTurns = action.payload
+            console.log("number of turns", state.remainingTurns)
+        },
+        decrementTurns(state, action){
+            state.remainingTurns -= 1
         }
     },
     extraReducers: {
@@ -68,5 +75,5 @@ const gamesSlice = createSlice({
     }
 })
 
-export const {savePassStyle, saveTurnStyle} = gamesSlice.actions
+export const {savePassStyle, saveTurnStyle, saveTurnCount, decrementTurns} = gamesSlice.actions
 export default gamesSlice.reducer

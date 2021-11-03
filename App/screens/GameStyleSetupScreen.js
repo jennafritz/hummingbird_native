@@ -2,9 +2,10 @@ import { View, Text, TouchableOpacity, TextInput} from 'react-native'
 import React from 'react'
 import styles from '../constants/styles'
 import { useState } from 'react'
-import { createGame, savePassStyle, saveTurnStyle } from '../config/Reducers/GamesReducer'
+import { createGame, savePassStyle, saveTurnStyle, saveTurnCount } from '../config/Reducers/GamesReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { createUserGames } from '../config/Reducers/UserGamesReducer'
+import TurnForm from '../components/TurnForm'
 
 //test
 
@@ -17,6 +18,7 @@ export default function GameStyleSetupScreen({ navigation }) {
     
     const dispatch = useDispatch()
     const [gameName, setGameName] = useState("")
+    const [turnInput, setTurnInput] = useState(undefined)
     const [passStyle, setPassStyle] = useState(undefined)
     const [turnStyle, setTurnStyle] = useState(undefined)
 
@@ -37,8 +39,12 @@ export default function GameStyleSetupScreen({ navigation }) {
             <TouchableOpacity style = {turnStyle === "countdown" ? styles.selectedButton : styles.button} onPress={() => setTurnStyle("countdown")}>
                 <Text style = {turnStyle === "countdown" ? styles.selectedButtonText : styles.buttonText}>The Final Countdown</Text>
             </TouchableOpacity>
-            <TouchableOpacity style = {turnStyle === "tbd" ? styles.selectedButton : styles.button} onPress={() => setTurnStyle("tbd")}>
-                <Text style = {turnStyle === "tbd" ? styles.selectedButtonText : styles.buttonText}>TBD</Text>
+            <TurnForm setTurnInput = {setTurnInput}/>
+            <TouchableOpacity style = {turnStyle === "pointLimit" ? styles.selectedButton : styles.button} onPress={() => setTurnStyle("pointLimit")}>
+                <Text style = {turnStyle === "pointLimit" ? styles.selectedButtonText : styles.buttonText}>pointLimit</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style = {turnStyle ==="zen" ? styles.selectedButton : styles.button} onPress={() => setTurnStyle("zen")}>
+                <Text style = {turnStyle === "zen" ? styles.selectedButtonText : styles.buttonText}>Zen Mode</Text>
             </TouchableOpacity>
 
             <Text style = {styles.subHeaderText}>Name Your Game</Text>
@@ -53,7 +59,7 @@ export default function GameStyleSetupScreen({ navigation }) {
                     dispatch(createUserGames({gameId: gameObj.id, playersArray: players}))
                     .then(() => navigation.push("GamePlayPassing"))
                 })
-                
+                dispatch(saveTurnCount(parseInt(turnInput, 10)))
             }}>
                 <Text style = {styles.buttonText}>
                     Start Game

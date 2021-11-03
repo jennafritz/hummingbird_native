@@ -73,9 +73,20 @@ const userGamesSlice = createSlice({
     name: "userGames",
     initialState,
     reducers: {
-        selectHummer(state, action){
+        selectHummerWinner(state, action){
             let newHummer = state.currentUserGames.find(userGame => userGame.user_id === action.payload)
             state.currentHummer = newHummer
+            console.log("winner")
+        },
+        selectHummerNext(state, action){
+            let currentIndex = state.currentUserGames.findIndex(userGame => userGame.user_id === action.payload)
+            let newIndex
+            if (currentIndex === state.currentUserGames.length - 1){
+                newIndex = 0
+            } else {
+                newIndex = currentIndex + 1
+            }
+            state.currentHummer = state.currentUserGames[newIndex]
         },
         addPoints(state, action){
             state.currentUserGames.forEach((userGame, index) => {
@@ -141,5 +152,5 @@ const userGamesSlice = createSlice({
     }
 })
 
-export const {selectHummer, addPoints, findWinner, clearUserGameState} = userGamesSlice.actions
+export const {selectHummerWinner, selectHummerNext, addPoints, findWinner, clearUserGameState} = userGamesSlice.actions
 export default userGamesSlice.reducer
