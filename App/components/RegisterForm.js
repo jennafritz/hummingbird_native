@@ -6,7 +6,7 @@ import styles from "../constants/styles";
 import { useSelector, useDispatch } from "react-redux";
 import { registerPlayer } from "../config/Reducers/PlayersReducer";
 
-export default function RegisterForm() {
+export default function RegisterForm({setRenderOption}) {
     const dispatch = useDispatch()
 
     const [formData,setFormData] = useState({
@@ -24,10 +24,21 @@ export default function RegisterForm() {
 
     return (
         <View >
-            <Text style={styles.text}>Register</Text>
-            <TextInput style={styles.input} value={formData.username}  onChange={(event) => handleChange(event, "username")} placeholder={"Username"} />
-            <TextInput style={styles.input} value={formData.password}  onChange={(event) => handleChange(event, "password")} placeholder={"Password"} secureTextEntry={true}/>
-            <TouchableOpacity style={styles.button} onPress={()=>dispatch(registerPlayer(formData))}>
+            <TextInput 
+                style={styles.input} 
+                value={formData.username}  
+                onChange={(event) => handleChange(event, "username")} placeholder={"Username"} 
+            />
+            <TextInput 
+                style={styles.input} 
+                value={formData.password}  
+                onChange={(event) => handleChange(event, "password")} placeholder={"Password"} 
+                secureTextEntry={true}/>
+            <TouchableOpacity style={styles.button} onPress={()=> {
+                console.log("register formData: ", formData)
+                // setRenderOption("addPlayer")
+                dispatch(registerPlayer(formData))
+            }}>
                 <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
         </View>

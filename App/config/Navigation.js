@@ -15,7 +15,7 @@ import LeaderboardScreen from '../screens/LeaderboardScreen'
 const MainStack = createStackNavigator()
 
 const MainStackScreen = () => (
-    <MainStack.Navigator headerMode='false' >
+    <MainStack.Navigator screenOptions={{headerShown: false}}>
         <MainStack.Screen name="Home" component={HomeScreen} />
         <MainStack.Screen name="PlayerSetup" component={PlayerSetupScreen} />
         <MainStack.Screen name="DecadeSetup" component={DecadeSetupScreen} />

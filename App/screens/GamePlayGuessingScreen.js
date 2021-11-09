@@ -5,7 +5,7 @@ import styles from "../constants/styles";
 import SelectWinner from "../components/SelectWinner";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { selectHummerWinner, selectHummerNext, findWinner, updateUserGames } from "../config/Reducers/UserGamesReducer";
+import { selectHummerWinner, selectHummerNext, findWinner, updateUserGames, addPoints } from "../config/Reducers/UserGamesReducer";
 import { addPointsToUsers } from "../config/Reducers/PlayersReducer";
 
 export default function GamePlayGuessingScreen({navigation}) {
@@ -20,6 +20,7 @@ export default function GamePlayGuessingScreen({navigation}) {
     let currentGuessers = currentUserGames.filter(player => player.user_id !== currentHummer.user_id)
     
     const [newHummer, setNewHummer] = useState(currentHummer)
+    const [winnerId, setWinnerId] = useState("")
 
     const dispatch = useDispatch()
 
@@ -33,7 +34,7 @@ export default function GamePlayGuessingScreen({navigation}) {
     return(
         <View style={styles.container}>
             <Text style={styles.titleText}>Select Winner</Text>
-            <FlatList keyExtractor={currentGuesser => currentGuesser.id.toString()} data={currentGuessers} renderItem={({item}) => <SelectWinner player = {item} setNewHummer={setNewHummer}/>}/>
+            <FlatList keyExtractor={currentGuesser => currentGuesser.id.toString()} data={currentGuessers} renderItem={({item}) => <SelectWinner player = {item} setNewHummer={setNewHummer} winnerId={winnerId} setWinnerId={setWinnerId}/>}/>
             <TouchableOpacity style={styles.button} onPress={() => {
                 passStyle === "winner" ? dispatch(selectHummerWinner(newHummer.user_id)) : dispatch(selectHummerNext(currentHummer.user_id))
 
@@ -61,6 +62,8 @@ export default function GamePlayGuessingScreen({navigation}) {
                     default:
                         console.log("default")
                 }
+
+                dispatch(addPoints(winnerId))
             }}>
                 <Text style={styles.buttonText}>Next</Text>
             </TouchableOpacity>

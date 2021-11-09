@@ -1,13 +1,16 @@
 import { StyleSheet } from "react-native"
 import { color } from "react-native-reanimated"
 import colors from "./colors"
+import { Dimensions } from "react-native"
 
+const screen = Dimensions.get("window")
 
 const styles = StyleSheet.create({
     logo: {
         resizeMode: 'contain',
         height: '20%',
-        marginTop: 75
+        marginTop: 75,
+        marginBottom: 50
     },
     titleText: {
         fontSize: 40,
@@ -39,6 +42,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: colors.backgroundColor
+    },
+    contentContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: screen.height * .1
     },
     buttonText: {
         fontSize: 25,

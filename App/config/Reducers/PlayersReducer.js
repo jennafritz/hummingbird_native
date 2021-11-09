@@ -31,7 +31,8 @@ export const loginPlayer = createAsyncThunk("users/loginPlayer", (userObj, thunk
 })
 
 export const registerPlayer = createAsyncThunk("users/registerPlayer", (userObj, thunkAPI) => {
-    return fetch("http://localhost:3000/users", {
+  console.log("userObj: ", userObj)  
+  return fetch("http://localhost:3000/users", {
         method: "POST",
         headers: {
         //   Authorization: `Bearer ${localStorage.token}`,
@@ -124,7 +125,11 @@ const playersSlice = createSlice({
     reducers: {
         clearPlayers(state, action){
             state.players = []
-        }
+        },
+        removePlayer(state, action) {
+          console.log("removePlayer ", action.payload)
+          state.currentPlayers = state.currentPlayers.filter(userGame => userGame.id !== action.payload)
+      }
     },
     extraReducers: {
         [loginPlayer.fulfilled](state, action) {
@@ -150,5 +155,5 @@ const playersSlice = createSlice({
     }
   })
 
-export const {clearPlayers} = playersSlice.actions
+export const {clearPlayers, removePlayer} = playersSlice.actions
 export default playersSlice.reducer

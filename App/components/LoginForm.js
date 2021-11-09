@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { loginPlayer } from "../config/Reducers/PlayersReducer";
 
-export default function LoginForm() {
+export default function LoginForm({setRenderOption}) {
 
     const dispatch = useDispatch()
 
@@ -26,10 +26,13 @@ export default function LoginForm() {
 
     return (
         <View >
-            <Text style={styles.text}>Login Form</Text>
             <TextInput style={styles.input} value={formData.username}  onChange={(event) => handleChange(event, "username")} placeholder={"Username"} />
             <TextInput style={styles.input} value={formData.password}  onChange={(event) => handleChange(event, "password")} placeholder={"Password"} secureTextEntry={true} />
-            <TouchableOpacity style={styles.button} onPress={()=>dispatch(loginPlayer(formData))}>
+            <TouchableOpacity style={styles.button} onPress={()=> {
+                console.log("login onPress")
+                dispatch(loginPlayer(formData))
+                setRenderOption("addPlayer")
+            }}>
                 <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
         </View>
