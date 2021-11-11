@@ -9,7 +9,7 @@ initialState = {
 
 export const createUserGames = createAsyncThunk("userGames/createUserGames", async (infoObj, thunkAPI) => {
     let token = await getToken()
-    return fetch("http://localhost:3000/user_games", {
+    return fetch("http://hummingbird-env-1.eba-dpnz3zm2.us-east-2.elasticbeanstalk.com/user_games", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -35,7 +35,7 @@ export const createUserGames = createAsyncThunk("userGames/createUserGames", asy
 export const updateUserGames = createAsyncThunk("userGames/updateUserGames", async (unused, thunkAPI) => {
     let token = await getToken()
     let currentState = thunkAPI.getState()
-    return fetch("http://localhost:3000/update_user_games", {
+    return fetch("http://hummingbird-env-1.eba-dpnz3zm2.us-east-2.elasticbeanstalk.com/update_user_games", {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`,

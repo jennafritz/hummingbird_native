@@ -13,12 +13,6 @@ const decadeButton = {
     width: "100%"
 }
 
-const buttonContainer = {
-    ...styles.container,
-    // width: "80%"
-    width: 200
-}
-
 const xStyle = {
     position: 'absolute',
     top: 0,
@@ -35,10 +29,13 @@ export default function Player({player}) {
     const dispatch = useDispatch()
 
     return (
-        <View style = {buttonContainer}>
+        <View style = {styles.playerComponentContainer}>
             <View style = {decadeButton} >
                 <Feather style={xStyle} name="x" size={20} onPress = {() => dispatch(removePlayer(player.id))} />
-                <Text style = {styles.buttonText}>
+                <Text 
+                    style = {styles.buttonText}
+                    numberOfLines = {1}
+                >
                     {player.username}
                 </Text>
             </View>

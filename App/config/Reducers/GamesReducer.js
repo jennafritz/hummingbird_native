@@ -22,7 +22,7 @@ const getToken = async () => {
 
 export const createGame = createAsyncThunk("games/createGames", async (gameName, thunkAPI) => {
     let token = await getToken()
-    return fetch("http://localhost:3000/games", {
+    return fetch("http://hummingbird-env-1.eba-dpnz3zm2.us-east-2.elasticbeanstalk.com/games", {
         method: "POST",
         headers: {
             Authorization: `Bearer ${token}`,

@@ -30,5 +30,6 @@
   "devDependencies": {
     "@babel/core": "^7.9.0"
   },
-  "private": true
+  "private": true,
+  "proxy": "http://Hummingbird-env-1.eba-dpnz3zm2.us-east-2.elasticbeanstalk.com"
 }

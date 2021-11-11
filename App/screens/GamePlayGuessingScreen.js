@@ -25,6 +25,7 @@ export default function GamePlayGuessingScreen({navigation}) {
     const dispatch = useDispatch()
 
     const finishGame = () => {
+        dispatch(addPoints(winnerId))
         dispatch(findWinner())
         dispatch(updateUserGames())
         dispatch(addPointsToUsers(currentUserGames))

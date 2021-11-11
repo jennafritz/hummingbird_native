@@ -7,7 +7,7 @@ initialState = {
 }
 
 export const loginPlayer = createAsyncThunk("users/loginPlayer", (userObj, thunkAPI) => {
-    return fetch("http://localhost:3000/login", {
+    return fetch("http://hummingbird-env-1.eba-dpnz3zm2.us-east-2.elasticbeanstalk.com/login", {
         method: "POST",
         headers: {
         //   Authorization: `Bearer ${localStorage.token}`,
@@ -32,7 +32,7 @@ export const loginPlayer = createAsyncThunk("users/loginPlayer", (userObj, thunk
 
 export const registerPlayer = createAsyncThunk("users/registerPlayer", (userObj, thunkAPI) => {
   console.log("userObj: ", userObj)  
-  return fetch("http://localhost:3000/users", {
+  return fetch("http://hummingbird-env-1.eba-dpnz3zm2.us-east-2.elasticbeanstalk.com/users", {
         method: "POST",
         headers: {
         //   Authorization: `Bearer ${localStorage.token}`,
@@ -55,7 +55,7 @@ export const registerPlayer = createAsyncThunk("users/registerPlayer", (userObj,
 
 export const getLeaderboard = createAsyncThunk("users/getLeaderboard", async (userObj, thunkAPI) => {
   let token = await getToken()  
-  return fetch("http://localhost:3000/leaderboard", {
+  return fetch("http://hummingbird-env-1.eba-dpnz3zm2.us-east-2.elasticbeanstalk.com/leaderboard", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -77,7 +77,7 @@ export const getLeaderboard = createAsyncThunk("users/getLeaderboard", async (us
 
 export const addPointsToUsers = createAsyncThunk("users/addPointsToUsers", async (userGamesArray, thunkAPI) => {
   let token = await getToken()
-  return fetch("http://localhost:3000/update_users", {
+  return fetch("http://hummingbird-env-1.eba-dpnz3zm2.us-east-2.elasticbeanstalk.com/update_users", {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,

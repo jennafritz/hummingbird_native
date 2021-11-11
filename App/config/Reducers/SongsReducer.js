@@ -8,7 +8,7 @@ initialState = {
 
 export const getCurrentSongs = createAsyncThunk("songs/getCurrentSongs", async (infoObj, thunkAPI) => {
     let token = await getToken()
-    return fetch("http://localhost:3000/get_songs", {
+    return fetch("http://hummingbird-env-1.eba-dpnz3zm2.us-east-2.elasticbeanstalk.com/get_songs", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

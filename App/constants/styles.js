@@ -19,6 +19,12 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         textAlign: 'center'
     },
+    pageHeaderText: {
+        fontSize: 30,
+        color: colors.color,
+        textAlign: 'center',
+        marginBottom: screen.height * .025
+    },
     subHeaderText: {
         fontSize: 35,
         color: colors.color,
@@ -34,8 +40,11 @@ const styles = StyleSheet.create({
         fontSize: 16,
         borderWidth: 1,
         borderColor: colors.color,
+        borderRadius: 8,
         margin: 5,
-        color: colors.color
+        color: colors.color,
+        width: 270,
+        textAlign: 'center'
     },
     container: {
         flex: 1,
@@ -45,7 +54,7 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
         marginVertical: screen.height * .1
     },
@@ -62,6 +71,14 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         margin: 25
     },
+    nextButton: {
+        borderColor: colors.color,
+        borderWidth: 2,
+        borderStyle: 'solid',
+        borderRadius: 8,
+        marginTop: 25,
+        width: screen.width * .5
+    },
     selectedButton: {
         borderColor: colors.color,
         borderWidth: 2,
@@ -75,7 +92,51 @@ const styles = StyleSheet.create({
         color: colors.backgroundColor,
         padding: 5,
         textAlign: 'center'
-    }
+    },
+    mainContentContainer: {
+        display: 'flex',
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginTop: screen.height * .025,
+        // borderColor: colors.color,
+        // borderWidth: 2,
+        // borderStyle: 'solid',
+    },
+    loginOrRegister: {
+        display: 'flex',
+        flexDirection: 'row'
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: "#e6eeff",
+        borderRadius: 20,
+        paddingVertical: 35,
+        paddingHorizontal: 20,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+      },
+      centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+      },
+      playerComponentContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.backgroundColor,
+        maxWidth: screen.width * .5,
+        margin: 5
+      }
 
 })
 
