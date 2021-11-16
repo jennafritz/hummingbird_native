@@ -13,6 +13,11 @@ const decadeButton = {
     width: "100%"
 }
 
+const loggedInPlayer = {
+    ...styles.buttonText,
+    paddingHorizontal: 30
+}
+
 const xStyle = {
     position: 'absolute',
     top: 0,
@@ -33,7 +38,7 @@ export default function Player({player}) {
             <View style = {decadeButton} >
                 <Feather style={xStyle} name="x" size={20} onPress = {() => dispatch(removePlayer(player.id))} />
                 <Text 
-                    style = {styles.buttonText}
+                    style = {loggedInPlayer}
                     numberOfLines = {1}
                 >
                     {player.username}

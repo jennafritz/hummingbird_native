@@ -19,18 +19,23 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         textAlign: 'center'
     },
-    pageHeaderText: {
-        fontSize: 30,
-        color: colors.color,
-        textAlign: 'center',
-        marginBottom: screen.height * .025
-    },
     subHeaderText: {
         fontSize: 35,
         color: colors.color,
         marginTop: 40,
         marginBottom: 20,
         textAlign: 'center'
+    },
+    pageHeaderText: {
+        fontSize: 30,
+        color: colors.color,
+        textAlign: 'center',
+        marginBottom: screen.height * .025
+    },
+    pageSubHeaderText: {
+        fontSize: 25,
+        color: colors.color,
+        textAlign: 'center',
     },
     text: {
         color: colors.color
@@ -134,7 +139,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: colors.backgroundColor,
-        maxWidth: screen.width * .5,
+        width: screen.width * .5,
         margin: 5
       }
 

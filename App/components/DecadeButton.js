@@ -11,6 +11,7 @@ const decadeButton = {
     ...styles.button,
     margin: 0,
     width: "100%",
+
 }
 
 const selectedDecadeButton = {
@@ -22,7 +23,7 @@ const selectedDecadeButton = {
 
 const buttonContainer = {
     ...styles.container,
-    width: "80%"
+    width: "100%"
 }
 
 const selectedButtonText = {
@@ -38,7 +39,7 @@ export default function DecadeButton({decade}) {
     const dispatch = useDispatch()
 
     return (
-        <View >
+        <View style={buttonContainer}>
             <TouchableOpacity style={selected ?
             selectedDecadeButton : decadeButton} onPress={() => {
                 dispatch(selectDecade(decade.value))

@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, TextInput} from 'react-native'
+import { View, Text, TouchableOpacity, TextInput, Modal, Dimensions} from 'react-native'
 import React from 'react'
 import styles from '../constants/styles'
 import { useState } from 'react'
@@ -7,64 +7,193 @@ import { useDispatch, useSelector } from 'react-redux'
 import { createUserGames } from '../config/Reducers/UserGamesReducer'
 import TurnForm from '../components/TurnForm'
 
-//test
+const screen = Dimensions.get("window")
 
-const decadeButtonContainer ={
-    ...styles.container,
-    justifyContent: "space-around",
+const gameStyleButton = {
+    ...styles.button,
+    width: screen.width * 0.6,
+    margin: screen.height * .02
+}
+
+const gameStyleButtonText = {
+    ...styles.buttonText,
+    fontSize: 20
+}
+
+const selectedGameStyleButton = {
+    ...styles.selectedButton,
+    width: screen.width * 0.6,
+    margin: screen.height * .02
+}
+
+const selectedGameStyleButtonText = {
+    ...styles.selectedButtonText,
+    fontSize: 20,
+    color: "#e6eeff"
+}
+
+const gameNameInputStyle = {
+    ...styles.input,
+    borderWidth: 2,
+    width: screen.width * 0.6,
+    margin: screen.height * .02
+
+}
+
+const sectionViewStyle = {
+    marginVertical: screen.height * 0.015
 }
 
 export default function GameStyleSetupScreen({ navigation }) {
+    
     
     const dispatch = useDispatch()
     const [gameName, setGameName] = useState("")
     const [turnInput, setTurnInput] = useState(undefined)
     const [passStyle, setPassStyle] = useState(undefined)
     const [turnStyle, setTurnStyle] = useState(undefined)
+    const [showPassingOptions, setShowPassingOptions] = useState(false)
+    const [showTurnOptions, setShowTurnOptions] = useState(false)
 
     const players = useSelector(state => state.players.currentPlayers)
 
+    const passOptions = {
+        "winner":`The Winner\nIt Takes All`,
+        "circle":`What Goes Around...\nComes Around`
+    }
+
+    const turnOptions = {
+        "countdown":`The Final\nCountdown`,
+        "pointLimit":`Point\nLimit`,
+        "zen":`Zen\nMode`
+    }
+
+    // create function that takes in setPassStyle or SetTurnStyle, a style option, and either setShowPassingOptions or setShowTurnOptions -> call on every onPress and pass in correct parameters
+
     return (
-        <View style={decadeButtonContainer}>
-            <Text style = {styles.titleText}>Choose Gameplay Mode</Text>
-            <Text style = {styles.subHeaderText}>Choose Passing Style</Text>
-            <TouchableOpacity style = {passStyle === "winner" ? styles.selectedButton : styles.button} onPress={() => setPassStyle("winner")}>
-                <Text style = {passStyle === "winner" ? styles.selectedButtonText : styles.buttonText} onPress={() => setPassStyle("winner")}>The Winner Takes It All</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style = {passStyle === "circle" ? styles.selectedButton : styles.button} onPress={() => setPassStyle("circle")}>
-                <Text style = {passStyle === "circle" ? styles.selectedButtonText : styles.buttonText}>What Goes Around... Comes Around</Text>
-            </TouchableOpacity>
+        <View style = {styles.container}>
+            <View style={styles.contentContainer}>
+                <Text style = {styles.pageHeaderText}>Set Up Game</Text>
 
-            <Text style = {styles.subHeaderText}>Define Game Duration</Text>
-            <TouchableOpacity style = {turnStyle === "countdown" ? styles.selectedButton : styles.button} onPress={() => setTurnStyle("countdown")}>
-                <Text style = {turnStyle === "countdown" ? styles.selectedButtonText : styles.buttonText}>The Final Countdown</Text>
-            </TouchableOpacity>
-            <TurnForm setTurnInput = {setTurnInput}/>
-            <TouchableOpacity style = {turnStyle === "pointLimit" ? styles.selectedButton : styles.button} onPress={() => setTurnStyle("pointLimit")}>
-                <Text style = {turnStyle === "pointLimit" ? styles.selectedButtonText : styles.buttonText}>pointLimit</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style = {turnStyle ==="zen" ? styles.selectedButton : styles.button} onPress={() => setTurnStyle("zen")}>
-                <Text style = {turnStyle === "zen" ? styles.selectedButtonText : styles.buttonText}>Zen Mode</Text>
-            </TouchableOpacity>
+                <View style={sectionViewStyle}>
+                    <Text style = {styles.pageSubHeaderText}>Name Your Game</Text>
+                    <TextInput style={gameNameInputStyle} value={gameName}  onChangeText={setGameName} defaultValue={"Set Game Name"} />
+                </View>
 
-            <Text style = {styles.subHeaderText}>Name Your Game</Text>
-            <TextInput style={styles.input} value={gameName}  onChangeText={setGameName} defaultValue={"Set Game Name"} />
 
-            <TouchableOpacity style = {styles.button} onPress = {() => {
-                dispatch(savePassStyle(passStyle))
-                dispatch(saveTurnStyle(turnStyle))
-                dispatch(createGame(gameName))
-                .then((response) => {
-                    let gameObj = response.payload
-                    dispatch(createUserGames({gameId: gameObj.id, playersArray: players}))
-                    .then(() => navigation.push("GamePlayPassing"))
-                })
-                dispatch(saveTurnCount(parseInt(turnInput, 10)))
-            }}>
-                <Text style = {styles.buttonText}>
-                    Start Game
-                </Text>
-            </TouchableOpacity>
+                <View style={sectionViewStyle}>
+                    <Text style = {styles.pageSubHeaderText}>Choose Passing Style</Text>
+                    <TouchableOpacity 
+                        onPress= {() => setShowPassingOptions(true)}
+                        style={gameStyleButton}
+                    >
+                        <Text
+                            style={gameStyleButtonText}
+                        >
+                            {passStyle ? passOptions[passStyle] : "Click to\nSelect"}
+                        </Text>
+                    </TouchableOpacity>
+                    
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={showPassingOptions}
+                        onRequestClose={() => setShowPassingOptions(false)}
+                    >
+                        <View style={styles.centeredView}>
+                            <View style={styles.modalView} >
+                                <TouchableOpacity style = {passStyle === "winner" ? selectedGameStyleButton : gameStyleButton} onPress={() => {
+                                    setPassStyle("winner")
+                                    setShowPassingOptions(false)
+                                    }}>
+                                    <Text style = {passStyle === "winner" ? selectedGameStyleButtonText : gameStyleButtonText} >{`The Winner\nTakes It All`}</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style = {passStyle === "circle" ? selectedGameStyleButton : gameStyleButton} onPress={() => {
+                                    setPassStyle("circle")
+                                    setShowPassingOptions(false)
+                                    }}>
+                                    <Text style = {passStyle === "circle" ? selectedGameStyleButtonText : gameStyleButtonText}>{`What Goes Around...\nComes Around`}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </Modal>
+                </View>                    
+
+
+                
+                <View style={sectionViewStyle}>                    
+                    <Text style = {styles.pageSubHeaderText}>Define Game Duration</Text>
+
+                    <TouchableOpacity 
+                        onPress= {() => setShowTurnOptions(true)}
+                        style={gameStyleButton}
+                    >
+                        <Text
+                            style={gameStyleButtonText}
+                        >
+                            {turnStyle ? turnOptions[turnStyle] : "Click to\nSelect"}
+                        </Text>
+                    </TouchableOpacity>
+
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={showTurnOptions}
+                        onRequestClose={() => setShowTurnOptions(false)}
+                    >
+                        <View style={styles.centeredView}>
+                            <View style={styles.modalView} >
+                                {turnStyle === "defineCountdown"
+                                ? 
+                                <TurnForm 
+                                    setTurnInput = {setTurnInput}
+                                    setTurnStyle = {setTurnStyle}
+                                    setShowTurnOptions = {setShowTurnOptions}
+                                />
+                                :
+                                <>
+                                    <TouchableOpacity style = {turnStyle === "countdown" ? selectedGameStyleButton : gameStyleButton} onPress={() => {
+                                        setTurnStyle("defineCountdown")
+                                        }}>
+                                        <Text style = {turnStyle === "countdown" ? selectedGameStyleButtonText : gameStyleButtonText}>{"The Final\nCountdown"}</Text>
+                                    </TouchableOpacity>
+                                    
+                                    <TouchableOpacity style = {turnStyle === "pointLimit" ? selectedGameStyleButton : gameStyleButton} onPress={() => {
+                                        setTurnStyle("pointLimit")
+                                        setShowTurnOptions(false)
+                                        }}>
+                                        <Text style = {turnStyle === "pointLimit" ? selectedGameStyleButtonText : gameStyleButtonText}>{"Point\nLimit"}</Text>
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity style = {turnStyle ==="zen" ? selectedGameStyleButton : gameStyleButton} onPress={() => {
+                                        setTurnStyle("zen")
+                                        setShowTurnOptions(false)
+                                        }}>
+                                        <Text style = {turnStyle === "zen" ? selectedGameStyleButtonText : gameStyleButtonText}>{"Zen\nMode"}</Text>
+                                    </TouchableOpacity>
+                                </>
+                                }
+                            </View>
+                        </View>
+                    </Modal>
+                </View>
+
+                <TouchableOpacity style = {styles.nextButton} onPress = {() => {
+                    dispatch(savePassStyle(passStyle))
+                    dispatch(saveTurnStyle(turnStyle))
+                    dispatch(createGame(gameName))
+                    .then((response) => {
+                        let gameObj = response.payload
+                        dispatch(createUserGames({gameId: gameObj.id, playersArray: players}))
+                        .then(() => navigation.push("GamePlayPassing"))
+                    })
+                    dispatch(saveTurnCount(parseInt(turnInput, 10)))
+                }}>
+                    <Text style = {styles.buttonText}>
+                        Start Game
+                    </Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }

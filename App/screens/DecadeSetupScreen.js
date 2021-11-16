@@ -1,12 +1,15 @@
-import { View, Text, TouchableOpacity, Alert } from 'react-native'
+import { View, Text, TouchableOpacity, Alert, Dimensions} from 'react-native'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import styles from '../constants/styles'
 import DecadeButton from '../components/DecadeButton'
 
+const screen = Dimensions.get("window")
+
 const decadeButtonContainer ={
     ...styles.mainContentContainer,
     justifyContent: "space-around",
+    width: screen.width * 0.5,
 }
 
 
@@ -37,7 +40,7 @@ export default function DecadeSetupScreen({ navigation }) {
                     }
                     }}>
                     <Text style = {styles.buttonText}>
-                        Start Game
+                        Next
                     </Text>
                 </TouchableOpacity>
             </View>
