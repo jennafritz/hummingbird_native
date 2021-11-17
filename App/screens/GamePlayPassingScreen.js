@@ -22,6 +22,9 @@ export default function GamePlayPassingScreen({navigation}) {
         <View style={styles.container}>
             {turnStyle === "countdown" ? <Text style={styles.titleText}>{`Remaining Turns: ${remainingTurns}`}</Text> : null}
             <Text style={styles.titleText}>{`Pass to ${currentHummer.user.username}`}</Text>
+            <View>
+                
+            </View>
             <TouchableOpacity style={styles.button} onPress={() => {
                 dispatch(getCurrentSongs({decades: selectedDecades, numGroups: songGroups}))
                 .then(() => navigation.push("GamePlayHumming"))

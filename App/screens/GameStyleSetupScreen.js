@@ -6,6 +6,10 @@ import { createGame, savePassStyle, saveTurnStyle, saveTurnCount } from '../conf
 import { useDispatch, useSelector } from 'react-redux'
 import { createUserGames } from '../config/Reducers/UserGamesReducer'
 import TurnForm from '../components/TurnForm'
+import { AntDesign } from '@expo/vector-icons'
+import colors from '../constants/colors'
+import {Feather} from '@expo/vector-icons'
+
 
 const screen = Dimensions.get("window")
 
@@ -36,12 +40,32 @@ const gameNameInputStyle = {
     ...styles.input,
     borderWidth: 2,
     width: screen.width * 0.6,
-    margin: screen.height * .02
-
+    margin: screen.height * .02,
+    backgroundColor: '#84e1de'
 }
 
 const sectionViewStyle = {
-    marginVertical: screen.height * 0.015
+    marginVertical: screen.height * 0.015,
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center'
+}
+
+const questionStyle = {
+    position: 'absolute',
+    bottom: 5,
+    right: -30,
+    color: colors.color
+}
+
+const xStyle = {
+    position: 'absolute',
+    top: 2,
+    right: 2,
+    paddingTop: 2,
+    paddingRight: 2,
+    zIndex: 1,
+    color: colors.color
 }
 
 export default function GameStyleSetupScreen({ navigation }) {
@@ -54,6 +78,8 @@ export default function GameStyleSetupScreen({ navigation }) {
     const [turnStyle, setTurnStyle] = useState(undefined)
     const [showPassingOptions, setShowPassingOptions] = useState(false)
     const [showTurnOptions, setShowTurnOptions] = useState(false)
+    const [showInfo, setShowInfo] = useState(false)
+    const [modalInfo, setModalInfo] = useState(undefined)
 
     const players = useSelector(state => state.players.currentPlayers)
 
@@ -68,21 +94,53 @@ export default function GameStyleSetupScreen({ navigation }) {
         "zen":`Zen\nMode`
     }
 
+    const modalTextOptions = {
+        "pass": "Passing Options Explanation",
+        "turn": "Game Duration Options Explanation"
+    }
+
     // create function that takes in setPassStyle or SetTurnStyle, a style option, and either setShowPassingOptions or setShowTurnOptions -> call on every onPress and pass in correct parameters
 
     return (
         <View style = {styles.container}>
-            <View style={styles.contentContainer}>
+            <View style={{...styles.contentContainer, width: '100%'}}>
                 <Text style = {styles.pageHeaderText}>Set Up Game</Text>
 
                 <View style={sectionViewStyle}>
-                    <Text style = {styles.pageSubHeaderText}>Name Your Game</Text>
-                    <TextInput style={gameNameInputStyle} value={gameName}  onChangeText={setGameName} defaultValue={"Set Game Name"} />
+                        <Text style = {styles.pageSubHeaderText}>Name Your Game</Text>
+                        <TextInput placeholder="Name" style={gameNameInputStyle} value={gameName}  onChangeText={setGameName} defaultValue={"Set Game Name"} />
                 </View>
 
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={showInfo}
+                    onRequestClose={() => setShowInfo(false)}
+                >
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView} >
+                        <Feather style={xStyle} name="x" size={20} onPress = {() => setShowInfo(false)} />
+                            <Text>{modalInfo ? modalTextOptions[modalInfo] : null}</Text>
+                        </View>
+                    </View>
+                </Modal>
 
                 <View style={sectionViewStyle}>
-                    <Text style = {styles.pageSubHeaderText}>Choose Passing Style</Text>
+                    <View style={{width: '100%'}}>
+                        <View style={{alignSelf: 'center'}}>
+                            <Text style = {styles.pageSubHeaderText}>Choose Passing Style</Text>
+                            <AntDesign 
+                                name="questioncircleo" 
+                                size={20} color="black" 
+                                style={questionStyle} 
+                                onPress={() => {
+                                    setModalInfo("pass")
+                                    setShowInfo(true)
+                                }}
+                            />
+                        </View>
+                    </View>
+
                     <TouchableOpacity 
                         onPress= {() => setShowPassingOptions(true)}
                         style={gameStyleButton}
@@ -121,8 +179,22 @@ export default function GameStyleSetupScreen({ navigation }) {
 
 
                 
-                <View style={sectionViewStyle}>                    
-                    <Text style = {styles.pageSubHeaderText}>Define Game Duration</Text>
+                <View style={sectionViewStyle}>    
+                    <View style={{width: '100%'}}>
+                        <View style={{alignSelf: 'center'}}>
+                            <Text style = {styles.pageSubHeaderText}>Define Game Duration</Text>
+                            <AntDesign 
+                            name="questioncircleo" 
+                            size={20} 
+                            color="black" 
+                            style={questionStyle} 
+                            onPress={() => {
+                                setModalInfo("turn")
+                                setShowInfo(true)
+                            }}
+                            />
+                        </View>
+                    </View>                
 
                     <TouchableOpacity 
                         onPress= {() => setShowTurnOptions(true)}

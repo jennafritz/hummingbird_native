@@ -67,8 +67,7 @@ const styles = StyleSheet.create({
         fontSize: 25,
         color: colors.color,
         padding: 5,
-        textAlign: 'center'
-    },
+        textAlign: 'center',    },
     button: {
         borderColor: colors.color,
         borderWidth: 2,
@@ -116,7 +115,7 @@ const styles = StyleSheet.create({
     modalView: {
         margin: 20,
         backgroundColor: "#e6eeff",
-        borderRadius: 20,
+        borderRadius: 10,
         paddingVertical: 35,
         paddingHorizontal: 20,
         alignItems: "center",
@@ -127,7 +126,8 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        elevation: 5
+        elevation: 5,
+        minWidth: screen.width * .75
       },
       centeredView: {
         flex: 1,
@@ -141,6 +141,17 @@ const styles = StyleSheet.create({
         backgroundColor: colors.backgroundColor,
         width: screen.width * .5,
         margin: 5
+      },
+      songOptionButton: {
+        borderColor: colors.color,
+        borderWidth: 2,
+        borderStyle: 'solid',
+        borderRadius: 8,
+        margin: 0,
+        width: screen.width * 0.75,
+        // maxHeight: screen.height * 0.15,
+        // overflow: 'scroll',
+        paddingVertical: 3
       }
 
 })
