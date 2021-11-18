@@ -15,7 +15,7 @@ export default function HomeScreen({navigation}) {
         <View style={styles.container}>
             <Text style={styles.titleText}>Hummingbird</Text>
             <Image source={require('../assets/hummingbirdcopy.png')} style={styles.logo}/>
-            <TouchableOpacity style={styles.button} onPress={() => {
+            <TouchableOpacity style={styles.nextButton} onPress={() => {
                 navigation.push("PlayerSetup")
                 dispatch(clearDecades())
                 dispatch(clearSongGroups())

@@ -3,11 +3,23 @@ import React from "react";
 import { View, Text, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
 import styles from "../constants/styles";
 
-export default function SelectWinner({player, setNewHummer, winnerId, setWinnerId}) {
+const guesser = {
+    ...styles.button,
+    margin: 0,
+    width: "100%",
+}
+
+const selectedGuesser = {
+    ...styles.selectedButton,
+    margin: 0,
+    width: "100%",
+}
+
+export default function Guesser({player, setNewHummer, winnerId, setWinnerId}) {
 
     return (
-        <View style = {styles.container}>
-            <TouchableOpacity style = {winnerId === player.user_id ? styles.selectedButton : styles.button} onPress={() => {
+        <View style = {styles.playerComponentContainer}>
+            <TouchableOpacity style = {winnerId === player.user_id ? selectedGuesser : guesser} onPress={() => {
                 setWinnerId(player.user_id)
                 setNewHummer(player)
             }}>

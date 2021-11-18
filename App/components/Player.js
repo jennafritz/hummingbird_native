@@ -7,13 +7,13 @@ import { useDispatch } from "react-redux";
 import {Feather} from '@expo/vector-icons'
 import { removePlayer } from "../config/Reducers/PlayersReducer";
 
-const decadeButton = {
+const addedPlayerButton = {
     ...styles.button,
     margin: 0,
     width: "100%"
 }
 
-const loggedInPlayer = {
+const loggedInPlayerText = {
     ...styles.buttonText,
     paddingHorizontal: 30
 }
@@ -35,10 +35,10 @@ export default function Player({player}) {
 
     return (
         <View style = {styles.playerComponentContainer}>
-            <View style = {decadeButton} >
+            <View style = {addedPlayerButton} >
                 <Feather style={xStyle} name="x" size={20} onPress = {() => dispatch(removePlayer(player.id))} />
                 <Text 
-                    style = {loggedInPlayer}
+                    style = {loggedInPlayerText}
                     numberOfLines = {1}
                 >
                     {player.username}

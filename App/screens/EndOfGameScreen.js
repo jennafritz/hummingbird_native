@@ -20,7 +20,7 @@ export default function EndOfGameScreen({navigation}) {
 
     return(
         <View style={styles.container}>
-            <Text style={styles.titleText}>Congratulations, {winnerNameString}, you won with {gameWinner[0].points} points!</Text>
+            <Text style={styles.pageHeaderText}>Congratulations, {winnerNameString}, you won with {gameWinner[0].points} points!</Text>
             <TouchableOpacity style={styles.button} onPress={ () => {
                 navigation.dispatch(StackActions.popToTop());
                 // dispatch(clearDecades())

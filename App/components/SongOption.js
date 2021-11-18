@@ -1,8 +1,9 @@
 import React, {useState} from "react";
 // import {  } from "react-native-gesture-handler";
-import { View, Text, TouchableOpacity, Dimensions } from 'react-native'
+import { View, Text, TouchableOpacity, Dimensions, DynamicColorIOS } from 'react-native'
 import { ScrollView } from "react-native-gesture-handler";
 import styles from "../constants/styles";
+import colors from "../constants/colors";
 
 
 const screen = Dimensions.get("window")
@@ -21,34 +22,19 @@ const buttonContainer = {
     // marginVertical: screen.height * .025
 }
 
-
+const selectedSongOptionButton = {
+    ...styles.songOptionButton,
+    backgroundColor: colors.color
+}
 
 
 export default function SongOption({song, setFeaturedSong, featuredSong}) {
 
     return (
-        <>
-        {featuredSong === song.id
-        ?
-            <View style = {buttonContainer}>
-                <ScrollView 
-                    style = {styles.songOptionButton} 
-                    onPress={() => setFeaturedSong(undefined)}
-                    showsVerticalScrollIndicator={false}
-                >
-                    <Text style = {{...styles.buttonText, fontSize: 30, paddingTop: 10}}>{song.title}</Text>
-                    <Text style = {{...styles.buttonText, fontSize: 20}}>{song.artist}</Text>
-                    <Text style = {{...styles.buttonText, fontSize: 20}}>{song.year}</Text>
-                </ScrollView>
-            </View>  
-        :
-            <View style = {buttonContainer}>
-                <TouchableOpacity style = {styles.songOptionButton} onPress={() => setFeaturedSong(song.id)}>
-                    <Text numberOfLines={1} style = {styles.buttonText}>{song.title}</Text>
-                </TouchableOpacity>
-            </View>
-        }
-        </> 
-
+        <View style = {buttonContainer}>
+            <TouchableOpacity style = {song.id === featuredSong.id ? selectedSongOptionButton : styles.songOptionButton} onPress={() => setFeaturedSong(song)}>
+                <Text numberOfLines={1} style = {song.id === featuredSong.id ? styles.selectedButtonText :styles.buttonText}>{song.title}</Text>
+            </TouchableOpacity>
+        </View>
     )
 }

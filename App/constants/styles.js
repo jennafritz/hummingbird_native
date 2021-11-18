@@ -67,7 +67,8 @@ const styles = StyleSheet.create({
         fontSize: 25,
         color: colors.color,
         padding: 5,
-        textAlign: 'center',    },
+        textAlign: 'center',    
+    },
     button: {
         borderColor: colors.color,
         borderWidth: 2,

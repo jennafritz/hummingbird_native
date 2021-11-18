@@ -49,6 +49,7 @@ export default function LoginForm({setRenderOption, setShowForm}) {
                                 setShowForm(true)
                                 // setRenderOption("login")
                                 dispatch(loginPlayer(formData))
+                                //.then(response => response.error)
                                 setRenderOption("addPlayer")
                                 setShowForm(false)
                                 }}>
