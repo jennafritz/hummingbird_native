@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity, FlatList, Dimensions } from "react-native";
+import { View, Text, Image, TouchableOpacity, FlatList, Dimensions, Alert } from "react-native";
 import React from "react";
 import styles from "../constants/styles";
 // import Player from "../components/Player";
@@ -7,6 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { selectHummerWinner, selectHummerNext, findWinner, updateUserGames, addPoints } from "../config/Reducers/UserGamesReducer";
 import { addPointsToUsers } from "../config/Reducers/PlayersReducer";
+import NextButtons from "../components/NextButtons";
+import { Ionicons } from '@expo/vector-icons'; 
+import { FontAwesome5 } from '@expo/vector-icons'; 
+
+
 
 const screen = Dimensions.get("window")
 
@@ -36,6 +41,8 @@ export default function GamePlayGuessingScreen({navigation}) {
     const [newHummer, setNewHummer] = useState(currentHummer)
     const [winnerId, setWinnerId] = useState("")
 
+    const pointThreshold = useSelector(state => state.games.pointThreshold)
+
     const dispatch = useDispatch()
 
     const finishGame = () => {
@@ -44,6 +51,47 @@ export default function GamePlayGuessingScreen({navigation}) {
         dispatch(updateUserGames())
         dispatch(addPointsToUsers(currentUserGames))
         navigation.push("EndOfGame")
+    }
+
+    const guessingScreenNextFunction = () => {
+
+        if(winnerId){
+            passStyle === "winner" ? dispatch(selectHummerWinner(newHummer.user_id)) : dispatch(selectHummerNext(currentHummer.user_id))
+            dispatch(addPoints(winnerId))
+
+            switch (turnStyle){
+                case "countdown":
+                    if(remainingTurns === 0){
+                        finishGame()
+                    } else {
+                        navigation.push("GamePlayPassing")
+                    }
+                    console.log("countdown")
+                    break
+                case "zen":
+                    navigation.push("GamePlayPassing")
+                    console.log("zen")
+                    break
+                case "pointLimit":
+                    if(currentUserGames.some(userGame => userGame.points >= pointThreshold)) {
+                        finishGame()
+                        console.log("point treshold reached")
+                        console.log("currentUserGames: ", currentUserGames)
+                    } else {
+                        navigation.push("GamePlayPassing")
+                        console.log("currentUserGames: ", currentUserGames)
+                        console.log("point threshold not reached")
+                    }
+                    console.log("pointLimit")
+                    break
+                default:
+                    console.log("default")
+            }
+            
+        } else {
+            Alert.alert("Select Winner", "Please select a winner before continuing.")
+        }
+
     }
 
     const guesserList = {
@@ -66,55 +114,25 @@ export default function GamePlayGuessingScreen({navigation}) {
                         setWinnerId={setWinnerId}
                     />)}
                 </View>
-                {/* <FlatList
-                contentContainerStyle={guesserList} 
-                keyExtractor={currentGuesser => currentGuesser.id.toString()} 
-                data={currentGuessers} renderItem={({item}) => 
-                <Guesser player = {item} setNewHummer={setNewHummer} winnerId={winnerId} setWinnerId={setWinnerId}/>}
-                /> */}
 
-                <View style={nextScreenButtonContainer}>
-                    {turnStyle === "zen" ? 
-                    <TouchableOpacity style={nextScreenButton} onPress={() => {
-                        finishGame()
-                        }}>
-                        <Text style={styles.buttonText}>End Game</Text>
-                    </TouchableOpacity> : null}
-                    
-                    <TouchableOpacity style={turnStyle === "zen" ? nextScreenButton : styles.nextButton} onPress={() => {
-                        passStyle === "winner" ? dispatch(selectHummerWinner(newHummer.user_id)) : dispatch(selectHummerNext(currentHummer.user_id))
-
-                        switch (turnStyle){
-                            case "countdown":
-                                if(remainingTurns === 0){
-                                    finishGame()
-                                } else {
-                                    navigation.push("GamePlayPassing")
-                                }
-                                console.log("countdown")
-                                break
-                            case "zen":
-                                navigation.push("GamePlayPassing")
-                                console.log("zen")
-                                break
-                            case "pointLimit":
-                                if(currentUserGames.some(userGame => userGame.points === 100)) {
-                                    finishGame()
-                                } else {
-                                    navigation.push("GamePlayPassing")
-                                }
-                                console.log("pointLimit")
-                                break
-                            default:
-                                console.log("default")
-                        }
-
-                        dispatch(addPoints(winnerId))
-                    }}>
-                        <Text style={styles.buttonText}>Next</Text>
-                    </TouchableOpacity>
+                
+                    {turnStyle === "zen"
+                    ?
+                    <View style={styles.iconContainer}>
+                        <TouchableOpacity style={styles.iconButton} onPress={() => navigation.goBack()}>
+                            <FontAwesome5 style={styles.iconStyle} name="arrow-left" size={24} color="black" />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.iconButton} onPress={finishGame}>
+                            <Ionicons style={styles.iconStyle} name="close" size={35} color="black" />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.iconButton} onPress={guessingScreenNextFunction}>
+                            <FontAwesome5 style={styles.iconStyle} name="arrow-right" size={24} color="black" />
+                        </TouchableOpacity>
+                    </View>
+                    :
+                    <NextButtons forwardButtonFunction={guessingScreenNextFunction}/>
+                    }
                 </View>                
-            </View>
         </View>
     )
 }

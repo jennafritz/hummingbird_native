@@ -50,27 +50,27 @@ const songDetailInfo = {
     fontSize: 20,
 }
 
-const iconStyle = {
-    color: colors.color,
-    padding:10
-}
+// const iconStyle = {
+//     color: colors.color,
+//     padding: 10
+// }
 
-const iconContainer = {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly'
-}
+// const iconContainer = {
+//     display: 'flex',
+//     flexDirection: 'row',
+//     justifyContent: 'space-evenly'
+// }
 
-const iconButton = {
-    ...styles.button,
-    marginBottom: 0,
-    minWidth: screen.width * (1/7),
-    minHeight: screen.width * (1/7),
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colors.lightPurple,
+// const iconButton = {
+//     ...styles.button,
+//     marginBottom: 0,
+//     minWidth: screen.width * (1/7),
+//     minHeight: screen.width * (1/7),
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     backgroundColor: colors.lightPurple,
 
-}
+// }
 
 export default function GamePlayHummingScreen({navigation}) {
 
@@ -115,15 +115,15 @@ export default function GamePlayHummingScreen({navigation}) {
                     </View>
                 </ScrollView>
 
-                <View style={iconContainer}>
-                    <TouchableOpacity style = {iconButton} onPress={() => {
+                <View style={styles.iconContainer}>
+                    <TouchableOpacity style = {styles.iconButton} onPress={() => {
                             dispatch(getCurrentSongs({decades: selectedDecades, numGroups: songGroups}))
                             .then((response) => setFeaturedSong(response.payload[0]))
                             }}>
-                        <FontAwesome style={iconStyle} name="refresh" size={24} color="black" />
+                        <FontAwesome style={styles.iconStyle} name="refresh" size={24} color="black" />
                     </TouchableOpacity>
-                    <TouchableOpacity style = {iconButton} onPress={() => navigation.push("GamePlayGuessing")}>
-                        <Entypo style={iconStyle} name="check" size={24} color="black" /> 
+                    <TouchableOpacity style = {styles.iconButton} onPress={() => navigation.push("GamePlayGuessing")}>
+                        <Entypo style={styles.iconStyle} name="check" size={24} color="black" /> 
                     </TouchableOpacity>
                 </View>
             </View>

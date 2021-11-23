@@ -43,8 +43,8 @@ const styles = StyleSheet.create({
     input: {
         padding: 10,
         fontSize: 16,
-        // borderWidth: 2,
-        // borderColor: colors.color,
+        borderWidth: 0.5,
+        borderColor: colors.lightPurple,
         borderRadius: 8,
         margin: 5,
         color: colors.color,
@@ -70,9 +70,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',    
     },
     button: {
-        // borderColor: colors.color,
-        // borderWidth: 2,
-        // borderStyle: 'solid',
         borderRadius: 8,
         backgroundColor: colors.lightBlue,
         margin: 25,
@@ -81,11 +78,11 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.5,
         shadowRadius: 2,
         elevation: 5,
+        borderBottomWidth: Platform.OS === 'android' ? 2 : 0,
+        borderColor: 'rgba(156, 156, 156, 0.7)',
+        borderRightWidth: 1
     },
     nextButton: {
-        // borderColor: colors.color,
-        // borderWidth: 2,
-        // borderStyle: 'solid',
         borderRadius: 8,
         marginTop: 25,
         width: screen.width * .5,
@@ -95,14 +92,9 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.5,
         shadowRadius: 2,
         elevation: 5,
-        // shadowColor:'black',
-        // shadowOffset:{width:10,height:10},
-        // shadowOpacity:10,
-        // shadowRadius: 8
-  
-
-
-
+        borderBottomWidth: Platform.OS === 'android' ? 2 : 0,
+        borderColor: 'rgba(156, 156, 156, 0.7)',
+        borderRightWidth: 1
     },
     selectedButton: {
         // borderColor: colors.color,
@@ -117,6 +109,9 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
         elevation: 5,
         color: colors.color,
+        borderBottomWidth: Platform.OS === 'android' ? 2 : 0,
+        borderColor: 'rgba(156, 156, 156, 0.7)',
+        borderRightWidth: 1
     }, 
     selectedButtonText: {
         fontSize: 25,
@@ -153,8 +148,8 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        elevation: 5,
-        minWidth: screen.width * .75
+        elevation: 7,
+        minWidth: screen.width * .75,
       },
       centeredView: {
         flex: 1,
@@ -170,21 +165,52 @@ const styles = StyleSheet.create({
         margin: 5
       },
       songOptionButton: {
-        // borderColor: colors.color,
-        // borderWidth: 2,
-        // borderStyle: 'solid',
         borderRadius: 8,
         backgroundColor:colors.lightBlue,
         margin: 0,
         width: screen.width * 0.75,
-        // maxHeight: screen.height * 0.15,
-        // overflow: 'scroll',
         paddingVertical: 3,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.5,
         shadowRadius: 2,
         elevation: 5,
+        borderBottomWidth: Platform.OS === 'android' ? 2 : 0,
+        borderColor: 'rgba(156, 156, 156, 0.7)',
+        borderRightWidth: 1
+      },
+      iconStyle: {
+        color: colors.color,
+        padding: 10
+      },
+    
+      iconContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+      },
+
+      iconButton: {
+        borderRadius: 8,
+        backgroundColor: colors.lightBlue,
+        margin: 25,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.5,
+        shadowRadius: 2,
+        elevation: 5,
+        borderBottomWidth: Platform.OS === 'android' ? 2 : 0,
+        borderColor: 'rgba(156, 156, 156, 0.7)',
+        borderRightWidth: 1,
+
+
+        marginBottom: 0,
+        minWidth: screen.width * (1/7),
+        minHeight: screen.width * (1/7),
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.lightPurple,
+
       }
 
 })

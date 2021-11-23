@@ -2,13 +2,15 @@ import { View, Text, TouchableOpacity, TextInput, Modal, Dimensions} from 'react
 import React from 'react'
 import styles from '../constants/styles'
 import { useState } from 'react'
-import { createGame, savePassStyle, saveTurnStyle, saveTurnCount } from '../config/Reducers/GamesReducer'
+import { createGame, savePassStyle, saveTurnStyle, saveTurnCount, savePointThreshold } from '../config/Reducers/GamesReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { createUserGames } from '../config/Reducers/UserGamesReducer'
 import TurnForm from '../components/TurnForm'
 import { AntDesign } from '@expo/vector-icons'
 import colors from '../constants/colors'
 import {Feather} from '@expo/vector-icons'
+import NextButtons from '../components/NextButtons'
+import PointLimitForm from '../components/PointLimitForm'
 
 
 const screen = Dimensions.get("window")
@@ -41,7 +43,12 @@ const gameNameInputStyle = {
     // borderWidth: 2,
     width: screen.width * 0.6,
     margin: screen.height * .02,
-    backgroundColor: colors.offWhite
+    backgroundColor: colors.offWhite,
+    borderTopColor: 'rgba(156, 156, 156, 0.7)',
+    borderTopWidth: 2,
+    borderStyle: 'solid',
+    borderLeftColor: 'rgba(156, 156, 156, 0.7)',
+    borderLeftWidth: 2,
 }
 
 const sectionViewStyle = {
@@ -74,6 +81,7 @@ export default function GameStyleSetupScreen({ navigation }) {
     const dispatch = useDispatch()
     const [gameName, setGameName] = useState("")
     const [turnInput, setTurnInput] = useState(undefined)
+    const [maxPoints, setMaxPoints] = useState(undefined)
     const [passStyle, setPassStyle] = useState(undefined)
     const [turnStyle, setTurnStyle] = useState(undefined)
     const [showPassingOptions, setShowPassingOptions] = useState(false)
@@ -91,7 +99,9 @@ export default function GameStyleSetupScreen({ navigation }) {
     const turnOptions = {
         "countdown":`The Final\nCountdown`,
         "pointLimit":`Point\nLimit`,
-        "zen":`Zen\nMode`
+        "zen":`Zen\nMode`,
+        "defineCountdown":`The Final\nCountdown`,
+        "definePointLimit": `Point\nLimit`
     }
 
     const modalTextOptions = {
@@ -99,8 +109,20 @@ export default function GameStyleSetupScreen({ navigation }) {
         "turn": "Game Duration Options Explanation"
     }
 
-    // create function that takes in setPassStyle or SetTurnStyle, a style option, and either setShowPassingOptions or setShowTurnOptions -> call on every onPress and pass in correct parameters
+    const gameSetupScreenNextFunction = () => {
+        dispatch(savePassStyle(passStyle))
+        dispatch(saveTurnStyle(turnStyle))
+        dispatch(createGame(gameName))
+        .then((response) => {
+            let gameObj = response.payload
+            dispatch(createUserGames({gameId: gameObj.id, playersArray: players}))
+            .then(() => navigation.push("GamePlayPassing"))
+        })
+        dispatch(saveTurnCount(parseInt(turnInput, 10)))
+        dispatch(savePointThreshold(parseInt(maxPoints, 10)))
+    }
 
+    // create function that takes in setPassStyle or SetTurnStyle, a style option, and either setShowPassingOptions or setShowTurnOptions -> call on every onPress and pass in correct parameters
     return (
         <View style = {styles.container}>
             <View style={{...styles.contentContainer, width: '100%'}}>
@@ -119,7 +141,7 @@ export default function GameStyleSetupScreen({ navigation }) {
                 >
                     <View style={styles.centeredView}>
                         <View style={styles.modalView} >
-                        <Feather style={xStyle} name="x" size={20} onPress = {() => setShowInfo(false)} />
+                            <Feather style={xStyle} name="x" size={24} onPress = {() => setShowInfo(false)} />
                             <Text>{modalInfo ? modalTextOptions[modalInfo] : null}</Text>
                         </View>
                     </View>
@@ -160,6 +182,7 @@ export default function GameStyleSetupScreen({ navigation }) {
                     >
                         <View style={styles.centeredView}>
                             <View style={styles.modalView} >
+                                <Feather style={xStyle} name="x" size={24} onPress = {() => setShowPassingOptions(false)} />
                                 <TouchableOpacity style = {passStyle === "winner" ? selectedGameStyleButton : gameStyleButton} onPress={() => {
                                     setPassStyle("winner")
                                     setShowPassingOptions(false)
@@ -223,7 +246,16 @@ export default function GameStyleSetupScreen({ navigation }) {
                                     setShowTurnOptions = {setShowTurnOptions}
                                 />
                                 :
+                                turnStyle === "definePointLimit"
+                                ?
+                                <PointLimitForm 
+                                    setMaxPoints = {setMaxPoints}
+                                    setTurnStyle = {setTurnStyle}
+                                    setShowTurnOptions = {setShowTurnOptions}
+                                />
+                                :
                                 <>
+                                    <Feather style={xStyle} name="x" size={24} onPress = {() => setShowTurnOptions(false)} />
                                     <TouchableOpacity style = {turnStyle === "countdown" ? selectedGameStyleButton : gameStyleButton} onPress={() => {
                                         setTurnStyle("defineCountdown")
                                         }}>
@@ -231,8 +263,7 @@ export default function GameStyleSetupScreen({ navigation }) {
                                     </TouchableOpacity>
                                     
                                     <TouchableOpacity style = {turnStyle === "pointLimit" ? selectedGameStyleButton : gameStyleButton} onPress={() => {
-                                        setTurnStyle("pointLimit")
-                                        setShowTurnOptions(false)
+                                        setTurnStyle("definePointLimit")
                                         }}>
                                         <Text style = {gameStyleButtonText}>{"Point\nLimit"}</Text>
                                     </TouchableOpacity>
@@ -250,7 +281,7 @@ export default function GameStyleSetupScreen({ navigation }) {
                     </Modal>
                 </View>
 
-                <TouchableOpacity style = {styles.nextButton} onPress = {() => {
+                {/* <TouchableOpacity style = {styles.nextButton} onPress = {() => {
                     dispatch(savePassStyle(passStyle))
                     dispatch(saveTurnStyle(turnStyle))
                     dispatch(createGame(gameName))
@@ -264,7 +295,9 @@ export default function GameStyleSetupScreen({ navigation }) {
                     <Text style = {styles.buttonText}>
                         Start Game
                     </Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
+
+                <NextButtons forwardButtonFunction={gameSetupScreenNextFunction}/>
             </View>
         </View>
     )

@@ -91,12 +91,14 @@ const userGamesSlice = createSlice({
         addPoints(state, action){
             state.currentUserGames.forEach((userGame, index) => {
                 if(userGame.user_id === action.payload){
+                    console.log("line 94 of addPoints")
                     state.currentUserGames[index] = {
                         ...userGame,
                         points: userGame.points + 10
                     }
                 }
             })
+            console.log("finished addPoints")
         },
         findWinner(state, action){
             // console.log("state in findWinner: ", state)

@@ -8,11 +8,15 @@ import { useSelector } from 'react-redux'
 import { Dimensions } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'; 
 import colors from '../constants/colors'
+import { FontAwesome5 } from '@expo/vector-icons'; 
+import NextButtons from '../components/NextButtons'
+
 
 const plusStyle = {
     color: colors.color,
     padding: 25,
 }
+
 
 export default function PlayerSetupScreen({ navigation }) {
 
@@ -46,10 +50,7 @@ export default function PlayerSetupScreen({ navigation }) {
                     {renderOption === "register" ? <RegisterForm setRenderOption={setRenderOption}/> : null}
                 </View>
 
-                <TouchableOpacity style={styles.nextButton} onPress={() => navigation.push("DecadeSetup")}>
-                    <Text style={styles.buttonText}>Next</Text>
-                </TouchableOpacity>
-
+            <NextButtons backButtonFunction={() => navigation.push("Home")} forwardButtonFunction={() => navigation.push("DecadeSetup")}/>
             </View>
         </View>
     )

@@ -1,6 +1,6 @@
 import React from "react";
 // import {  } from "react-native-gesture-handler";
-import { View, Text, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
+import { View, Text, TouchableOpacity, Platform } from 'react-native'
 import styles from "../constants/styles";
 import colors from "../constants/colors";
 import { useDispatch } from "react-redux";

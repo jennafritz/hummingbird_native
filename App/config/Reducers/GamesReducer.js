@@ -6,7 +6,8 @@ initialState = {
     currentGame: {},
     passStyle: undefined, 
     turnStyle: undefined,
-    remainingTurns: undefined
+    remainingTurns: undefined,
+    pointThreshold: undefined
 }
 
 const getToken = async () => {
@@ -66,6 +67,10 @@ const gamesSlice = createSlice({
         },
         decrementTurns(state, action){
             state.remainingTurns -= 1
+        },
+        savePointThreshold(state, action) {
+            state.pointThreshold = action.payload
+            console.log("maxPoints in reducer: ", state.pointThreshold)
         }
     },
     extraReducers: {
@@ -75,5 +80,5 @@ const gamesSlice = createSlice({
     }
 })
 
-export const {savePassStyle, saveTurnStyle, saveTurnCount, decrementTurns} = gamesSlice.actions
+export const {savePassStyle, saveTurnStyle, saveTurnCount, decrementTurns, savePointThreshold} = gamesSlice.actions
 export default gamesSlice.reducer

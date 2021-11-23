@@ -3,6 +3,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import styles from '../constants/styles'
 import DecadeButton from '../components/DecadeButton'
+import NextButtons from '../components/NextButtons'
 
 const screen = Dimensions.get("window")
 
@@ -15,6 +16,14 @@ const decadeButtonContainer ={
 export default function DecadeSetupScreen({ navigation }) {
 
     const selectedDecades = useSelector(state => state.decades.selectedDecades)
+
+    const decadeScreenForwardButton = () => {
+        if (selectedDecades.length > 0) {
+            navigation.push("GameStyleSetup")
+        } else {
+            Alert.alert("Select Decades", "Please choose at least one decade to continue.")
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -30,17 +39,8 @@ export default function DecadeSetupScreen({ navigation }) {
                     <DecadeButton decade = {{name: "10's", value: 2010}}/>
                     <DecadeButton decade = {{name: "20's", value: 2020}}/>
                 </View>
-                <TouchableOpacity style = {styles.nextButton} onPress = {() => {
-                    if (selectedDecades.length > 0) {
-                        navigation.push("GameStyleSetup")
-                    } else {
-                        Alert.alert("Select Decades", "Please choose at least one decade to continue.")
-                    }
-                    }}>
-                    <Text style = {styles.buttonText}>
-                        Next
-                    </Text>
-                </TouchableOpacity>
+
+                <NextButtons forwardButtonFunction={decadeScreenForwardButton}/>
             </View>
         </View>
     )
