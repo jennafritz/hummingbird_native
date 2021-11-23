@@ -9,12 +9,12 @@ const screen = Dimensions.get("window")
 const numberOfTurnsInput = {
     ...styles.input,
     width: screen.width * 0.6,
-    borderWidth: 2
 }
 
 const enterButton = {
     ...styles.button,
     width: screen.width * 0.6,
+    backgroundColor: colors.lightPurple
 }
 
 export default function TurnForm({setTurnInput, setTurnStyle, setShowTurnOptions}) {

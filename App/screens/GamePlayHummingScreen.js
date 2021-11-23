@@ -67,7 +67,8 @@ const iconButton = {
     minWidth: screen.width * (1/7),
     minHeight: screen.width * (1/7),
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: colors.lightPurple,
 
 }
 

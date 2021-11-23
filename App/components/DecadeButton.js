@@ -18,7 +18,7 @@ const selectedDecadeButton = {
     ...styles.button,
     margin: 0,
     width: "100%",
-    backgroundColor: colors.color
+    backgroundColor: colors.darkBlue
 }
 
 const buttonContainer = {
@@ -28,7 +28,7 @@ const buttonContainer = {
 
 const selectedButtonText = {
     ...styles.buttonText,
-    color: colors.backgroundColor
+    color: colors.color
 }
 
 export default function DecadeButton({decade}) {

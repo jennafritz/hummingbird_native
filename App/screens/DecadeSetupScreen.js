@@ -12,8 +12,6 @@ const decadeButtonContainer ={
     width: screen.width * 0.5,
 }
 
-
-
 export default function DecadeSetupScreen({ navigation }) {
 
     const selectedDecades = useSelector(state => state.decades.selectedDecades)

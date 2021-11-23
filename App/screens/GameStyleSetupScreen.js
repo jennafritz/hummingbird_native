@@ -38,10 +38,10 @@ const selectedGameStyleButtonText = {
 
 const gameNameInputStyle = {
     ...styles.input,
-    borderWidth: 2,
+    // borderWidth: 2,
     width: screen.width * 0.6,
     margin: screen.height * .02,
-    backgroundColor: '#84e1de'
+    backgroundColor: colors.offWhite
 }
 
 const sectionViewStyle = {
@@ -164,13 +164,13 @@ export default function GameStyleSetupScreen({ navigation }) {
                                     setPassStyle("winner")
                                     setShowPassingOptions(false)
                                     }}>
-                                    <Text style = {passStyle === "winner" ? selectedGameStyleButtonText : gameStyleButtonText} >{`The Winner\nTakes It All`}</Text>
+                                    <Text style = {gameStyleButtonText} >{`The Winner\nTakes It All`}</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style = {passStyle === "circle" ? selectedGameStyleButton : gameStyleButton} onPress={() => {
                                     setPassStyle("circle")
                                     setShowPassingOptions(false)
                                     }}>
-                                    <Text style = {passStyle === "circle" ? selectedGameStyleButtonText : gameStyleButtonText}>{`What Goes Around...\nComes Around`}</Text>
+                                    <Text style = {gameStyleButtonText}>{`What Goes Around...\nComes Around`}</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -227,21 +227,21 @@ export default function GameStyleSetupScreen({ navigation }) {
                                     <TouchableOpacity style = {turnStyle === "countdown" ? selectedGameStyleButton : gameStyleButton} onPress={() => {
                                         setTurnStyle("defineCountdown")
                                         }}>
-                                        <Text style = {turnStyle === "countdown" ? selectedGameStyleButtonText : gameStyleButtonText}>{"The Final\nCountdown"}</Text>
+                                        <Text style = {gameStyleButtonText}>{"The Final\nCountdown"}</Text>
                                     </TouchableOpacity>
                                     
                                     <TouchableOpacity style = {turnStyle === "pointLimit" ? selectedGameStyleButton : gameStyleButton} onPress={() => {
                                         setTurnStyle("pointLimit")
                                         setShowTurnOptions(false)
                                         }}>
-                                        <Text style = {turnStyle === "pointLimit" ? selectedGameStyleButtonText : gameStyleButtonText}>{"Point\nLimit"}</Text>
+                                        <Text style = {gameStyleButtonText}>{"Point\nLimit"}</Text>
                                     </TouchableOpacity>
 
                                     <TouchableOpacity style = {turnStyle ==="zen" ? selectedGameStyleButton : gameStyleButton} onPress={() => {
                                         setTurnStyle("zen")
                                         setShowTurnOptions(false)
                                         }}>
-                                        <Text style = {turnStyle === "zen" ? selectedGameStyleButtonText : gameStyleButtonText}>{"Zen\nMode"}</Text>
+                                        <Text style = {gameStyleButtonText}>{"Zen\nMode"}</Text>
                                     </TouchableOpacity>
                                 </>
                                 }

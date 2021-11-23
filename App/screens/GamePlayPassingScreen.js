@@ -25,7 +25,7 @@ export default function GamePlayPassingScreen({navigation}) {
             <View>
                 
             </View>
-            <TouchableOpacity style={styles.button} onPress={() => {
+            <TouchableOpacity style={styles.nextButton} onPress={() => {
                 dispatch(getCurrentSongs({decades: selectedDecades, numGroups: songGroups}))
                 .then(() => navigation.push("GamePlayHumming"))
                 .then(() => dispatch(decrementTurns()))

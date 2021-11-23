@@ -11,7 +11,7 @@ const formButtonStyle = {
     ...styles.button,
     width: 125,
     margin: 10,
-    borderWidth: 1
+    backgroundColor: colors.lightPurple
 }
 
 export default function LoginForm({setRenderOption, setShowForm}) {

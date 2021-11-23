@@ -8,12 +8,6 @@ import colors from "../constants/colors";
 
 const screen = Dimensions.get("window")
 
-const decadeButton = {
-    ...styles.button,
-    margin: 0,
-    width: "100%",
-}
-
 const buttonContainer = {
     ...styles.container,
     // width: "80%"
@@ -24,7 +18,7 @@ const buttonContainer = {
 
 const selectedSongOptionButton = {
     ...styles.songOptionButton,
-    backgroundColor: colors.color
+    backgroundColor: colors.darkBlue
 }
 
 
@@ -33,7 +27,7 @@ export default function SongOption({song, setFeaturedSong, featuredSong}) {
     return (
         <View style = {buttonContainer}>
             <TouchableOpacity style = {song.id === featuredSong.id ? selectedSongOptionButton : styles.songOptionButton} onPress={() => setFeaturedSong(song)}>
-                <Text numberOfLines={1} style = {song.id === featuredSong.id ? styles.selectedButtonText :styles.buttonText}>{song.title}</Text>
+                <Text numberOfLines={1} style = {styles.buttonText}>{song.title}</Text>
             </TouchableOpacity>
         </View>
     )

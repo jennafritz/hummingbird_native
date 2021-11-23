@@ -23,7 +23,7 @@ export default function Guesser({player, setNewHummer, winnerId, setWinnerId}) {
                 setWinnerId(player.user_id)
                 setNewHummer(player)
             }}>
-                <Text style = {winnerId === player.user_id ? styles.selectedButtonText : styles.buttonText}>{player.user.username} - {player.points}</Text>
+                <Text style = {styles.buttonText}>{player.user.username} - {player.points}</Text>
             </TouchableOpacity>
         </View>
     )
