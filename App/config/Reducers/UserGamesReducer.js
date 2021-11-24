@@ -4,7 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 initialState = {
     currentUserGames: [],
     currentHummer: {},
-    gameWinner: []
+    gameWinner: [],
+    pointsStanding: []
 }
 
 export const createUserGames = createAsyncThunk("userGames/createUserGames", async (infoObj, thunkAPI) => {
@@ -48,7 +49,6 @@ export const updateUserGames = createAsyncThunk("userGames/updateUserGames", asy
         .then(res => res.json())
         .then(message => 
           {
-              console.log("message: ", message)
             //   if(itinerariesArray.error){
             //     return thunkAPI.rejectWithValue(itinerariesArray.error)
             //   } else {
@@ -76,7 +76,6 @@ const userGamesSlice = createSlice({
         selectHummerWinner(state, action){
             let newHummer = state.currentUserGames.find(userGame => userGame.user_id === action.payload)
             state.currentHummer = newHummer
-            console.log("winner")
         },
         selectHummerNext(state, action){
             let currentIndex = state.currentUserGames.findIndex(userGame => userGame.user_id === action.payload)
@@ -88,21 +87,22 @@ const userGamesSlice = createSlice({
             }
             state.currentHummer = state.currentUserGames[newIndex]
         },
-        addPoints(state, action){
-            state.currentUserGames.forEach((userGame, index) => {
-                if(userGame.user_id === action.payload){
-                    console.log("line 94 of addPoints")
-                    state.currentUserGames[index] = {
-                        ...userGame,
-                        points: userGame.points + 10
-                    }
-                }
-            })
-            console.log("finished addPoints")
+        updateUserPoints(state, action){
+            state.currentUserGames = action.payload
         },
         findWinner(state, action){
-            // console.log("state in findWinner: ", state)
-            let maxPoints = 0
+            let pointsArray = state.currentUserGames.map(userGame => userGame.points)
+            pointsArray.sort((numA, numB) => numB - numA)
+
+            let pointsSet = new Set()
+            pointsArray.forEach(pointValue => {
+                if(!pointsSet.has(pointValue)){
+                    pointsSet.add(pointValue)
+                }
+            })
+            
+            state.pointsStanding = Array.from(pointsSet.values())
+            let maxPoints = state.pointsStanding[0]
             state.currentUserGames.forEach(userGame => {
                 if (userGame.points > maxPoints) {
                     maxPoints = userGame.points
@@ -121,14 +121,8 @@ const userGamesSlice = createSlice({
                     return userGame
                 }
             })
-            // let winners = state.currentUserGames.filter(userGame => userGame.points === maxPoints)
-            // for(let i=0; i<winners.length; i++){
-            //     winners[i] = {
-            //         ...winners[i],
-            //         winner:true
-            //     }
-            // }
-            // state.gameWinner = winners
+
+            
         },
         clearUserGameState(state, action){
             state.currentUserGames = []
@@ -136,10 +130,6 @@ const userGamesSlice = createSlice({
             state.gameWinner = []
         }
         
-    
-        
-    
-        // console.log("maxPoints: ",maxPoints)
     },
     extraReducers: {
         [createUserGames.fulfilled](state, action) {
@@ -147,12 +137,11 @@ const userGamesSlice = createSlice({
             state.currentHummer = action.payload[0]
         },
         [updateUserGames.fulfilled](state, action) {
-            console.log("fulfilled")
             // state.currentUserGames = action.payload
             // state.currentHummer = action.payload[0]
         }
     }
 })
 
-export const {selectHummerWinner, selectHummerNext, addPoints, findWinner, clearUserGameState} = userGamesSlice.actions
+export const {selectHummerWinner, selectHummerNext, findWinner, clearUserGameState, updateUserPoints} = userGamesSlice.actions
 export default userGamesSlice.reducer

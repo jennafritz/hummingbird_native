@@ -5,12 +5,11 @@ import styles from "../constants/styles";
 import Guesser from "../components/Guesser";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { selectHummerWinner, selectHummerNext, findWinner, updateUserGames, addPoints } from "../config/Reducers/UserGamesReducer";
+import { selectHummerWinner, selectHummerNext, findWinner, updateUserGames, updateUserPoints } from "../config/Reducers/UserGamesReducer";
 import { addPointsToUsers } from "../config/Reducers/PlayersReducer";
 import NextButtons from "../components/NextButtons";
 import { Ionicons } from '@expo/vector-icons'; 
 import { FontAwesome5 } from '@expo/vector-icons'; 
-
 
 
 const screen = Dimensions.get("window")
@@ -46,18 +45,35 @@ export default function GamePlayGuessingScreen({navigation}) {
     const dispatch = useDispatch()
 
     const finishGame = () => {
-        dispatch(addPoints(winnerId))
         dispatch(findWinner())
         dispatch(updateUserGames())
         dispatch(addPointsToUsers(currentUserGames))
         navigation.push("EndOfGame")
     }
 
+    const addPoints = () => {
+        let updatedUserGames = currentUserGames.map(userGame => {
+            if(userGame.user_id === winnerId){
+                return {
+                    ...userGame,
+                    points: userGame.points + 10
+                }
+            } else {
+                return userGame
+            }
+        })
+        dispatch(updateUserPoints(updatedUserGames))
+        return updatedUserGames
+    }
+
     const guessingScreenNextFunction = () => {
 
         if(winnerId){
             passStyle === "winner" ? dispatch(selectHummerWinner(newHummer.user_id)) : dispatch(selectHummerNext(currentHummer.user_id))
-            dispatch(addPoints(winnerId))
+            let updatedUserGamesArray
+            if(turnStyle !== "zen") {
+                updatedUserGamesArray = addPoints(winnerId)
+            }
 
             switch (turnStyle){
                 case "countdown":
@@ -73,10 +89,10 @@ export default function GamePlayGuessingScreen({navigation}) {
                     console.log("zen")
                     break
                 case "pointLimit":
-                    if(currentUserGames.some(userGame => userGame.points >= pointThreshold)) {
+                    console.log("updatedUserGamesArray: ", updatedUserGamesArray)
+                    if(updatedUserGamesArray.some(userGame => userGame.points >= pointThreshold)) {
                         finishGame()
                         console.log("point treshold reached")
-                        console.log("currentUserGames: ", currentUserGames)
                     } else {
                         navigation.push("GamePlayPassing")
                         console.log("currentUserGames: ", currentUserGames)
@@ -119,13 +135,13 @@ export default function GamePlayGuessingScreen({navigation}) {
                     {turnStyle === "zen"
                     ?
                     <View style={styles.iconContainer}>
-                        <TouchableOpacity style={styles.iconButton} onPress={() => navigation.goBack()}>
+                        <TouchableOpacity style={{...styles.iconButton, margin: 0}} onPress={() => navigation.goBack()}>
                             <FontAwesome5 style={styles.iconStyle} name="arrow-left" size={24} color="black" />
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.iconButton} onPress={finishGame}>
+                        <TouchableOpacity style={{...styles.iconButton, margin: 0}} onPress={() => navigation.push("EndOfGame")}>
                             <Ionicons style={styles.iconStyle} name="close" size={35} color="black" />
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.iconButton} onPress={guessingScreenNextFunction}>
+                        <TouchableOpacity style={{...styles.iconButton, margin: 0}} onPress={guessingScreenNextFunction}>
                             <FontAwesome5 style={styles.iconStyle} name="arrow-right" size={24} color="black" />
                         </TouchableOpacity>
                     </View>

@@ -5,6 +5,8 @@ import { Dimensions } from "react-native"
 
 const screen = Dimensions.get("window")
 
+const fixedWidth = screen.width * .7
+
 const styles = StyleSheet.create({
     logo: {
         resizeMode: 'contain',
@@ -85,7 +87,7 @@ const styles = StyleSheet.create({
     nextButton: {
         borderRadius: 8,
         marginTop: 25,
-        width: screen.width * .5,
+        width: fixedWidth,
         backgroundColor: colors.lightPurple,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
@@ -149,7 +151,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 7,
-        minWidth: screen.width * .75,
+        minWidth: fixedWidth,
       },
       centeredView: {
         flex: 1,
@@ -161,14 +163,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: colors.backgroundColor,
-        width: screen.width * .5,
+        width: fixedWidth,
         margin: 5
       },
       songOptionButton: {
         borderRadius: 8,
         backgroundColor:colors.lightBlue,
         margin: 0,
-        width: screen.width * 0.75,
+        width: fixedWidth,
         paddingVertical: 3,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
@@ -187,7 +189,8 @@ const styles = StyleSheet.create({
       iconContainer: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        width: fixedWidth
       },
 
       iconButton: {
@@ -205,12 +208,17 @@ const styles = StyleSheet.create({
 
 
         marginBottom: 0,
-        minWidth: screen.width * (1/7),
-        minHeight: screen.width * (1/7),
+        width: screen.width * .15,
+        height: screen.width * .15,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: colors.lightPurple,
 
+      },
+    winnersContainer: {
+        flex: 1,
+        justifyContent: 'space-between',
+        marginVertical: 25
       }
 
 })

@@ -17,7 +17,7 @@ const screen = Dimensions.get("window")
 
 const gameStyleButton = {
     ...styles.button,
-    width: screen.width * 0.6,
+    width: screen.width * 0.7,
     margin: screen.height * .02
 }
 
@@ -41,7 +41,7 @@ const selectedGameStyleButtonText = {
 const gameNameInputStyle = {
     ...styles.input,
     // borderWidth: 2,
-    width: screen.width * 0.6,
+    width: screen.width * 0.7,
     margin: screen.height * .02,
     backgroundColor: colors.offWhite,
     borderTopColor: 'rgba(156, 156, 156, 0.7)',

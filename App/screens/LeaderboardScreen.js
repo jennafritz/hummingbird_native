@@ -37,11 +37,6 @@ export default function LeaderboardScreen({ navigation }) {
                 <View style={leaderboardView}>
                     {leaders.map(leader => <LeaderboardItem key={leader.id} playerInfo={leader}/>)}
                 </View>
-                {/* <FlatList 
-                    data={leaders} 
-                    keyExtractor={leader => leader.id.toString()}
-                    renderItem={({item}) => <LeaderboardItem playerInfo={item}/>}
-                /> */}
                 <TouchableOpacity style={styles.nextButton} onPress={() => {
                     navigation.dispatch(StackActions.popToTop());
                     // dispatch(clearDecades())

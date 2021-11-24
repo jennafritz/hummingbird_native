@@ -1,11 +1,14 @@
 import React from "react";
 // import {  } from "react-native-gesture-handler";
 import { useState } from "react";
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, Dimensions } from 'react-native'
 import styles from "../constants/styles";
 import { selectDecade } from "../config/Reducers/DecadesReducer";
 import { useDispatch, useSelector } from "react-redux";
 import colors from "../constants/colors";
+
+
+const screen = Dimensions.get("window")
 
 const decadeButton = {
     ...styles.button,
@@ -23,7 +26,7 @@ const selectedDecadeButton = {
 
 const buttonContainer = {
     ...styles.container,
-    width: "100%"
+    width: screen.width * .7
 }
 
 const selectedButtonText = {
